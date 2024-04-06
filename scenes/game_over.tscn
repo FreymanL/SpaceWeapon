@@ -1,0 +1,75 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7v3v2ps5qrfy"]
+
+[ext_resource type="Script" path="res://scripts/game_over.gd" id="1_qmk7s"]
+[ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="2_tltw8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1vrgj"]
+font = ExtResource("2_tltw8")
+font_size = 14
+font_color = Color(1, 0, 0.0156863, 1)
+
+[sub_resource type="Theme" id="Theme_0n5cr"]
+default_font = ExtResource("2_tltw8")
+
+[node name="GameOver" type="Control" groups=["menu_actions"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qmk7s")
+
+[node name="PositionReference" type="Node2D" parent="."]
+
+[node name="BackGround" type="ColorRect" parent="PositionReference"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 490.0
+offset_top = 150.0
+offset_right = 790.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+color = Color(0, 0, 0, 0.729412)
+
+[node name="GameOverLabel" type="Label" parent="PositionReference/BackGround"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 57.0
+offset_bottom = 83.0
+grow_horizontal = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_1vrgj")
+horizontal_alignment = 1
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="PositionReference/BackGround"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -87.0
+offset_top = -33.0
+offset_right = 87.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_0n5cr")
+
+[node name="TryAgain" type="Button" parent="PositionReference/BackGround/ButtonsContainer"]
+layout_mode = 2
+text = "Try Again"
+
+[node name="GoHome" type="Button" parent="PositionReference/BackGround/ButtonsContainer"]
+layout_mode = 2
+text = "Go Home"
+
+[connection signal="pressed" from="PositionReference/BackGround/ButtonsContainer/TryAgain" to="." method="_on_try_again_pressed"]
+[connection signal="pressed" from="PositionReference/BackGround/ButtonsContainer/GoHome" to="." method="_on_go_home_pressed"]

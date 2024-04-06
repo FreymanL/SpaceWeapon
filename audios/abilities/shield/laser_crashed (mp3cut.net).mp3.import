@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cdtc48wc3yeyi"
+path="res://.godot/imported/laser_crashed (mp3cut.net).mp3-ba1c3daa89cc7454e5a1cdc050e42413.mp3str"
+
+[deps]
+
+source_file="res://audios/abilities/shield/laser_crashed (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/laser_crashed (mp3cut.net).mp3-ba1c3daa89cc7454e5a1cdc050e42413.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

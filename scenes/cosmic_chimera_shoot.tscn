@@ -1,0 +1,90 @@
+[gd_scene load_steps=17 format=3 uid="uid://bi4ojhcpsj6pe"]
+
+[ext_resource type="Texture2D" uid="uid://ccpktqdns3dw0" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_1.png" id="1_akfq6"]
+[ext_resource type="Script" path="res://scripts/cosmic_chimera_shoot.gd" id="1_xgaq6"]
+[ext_resource type="Texture2D" uid="uid://b52urhsa2l2la" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_exp2.png" id="2_80pim"]
+[ext_resource type="Texture2D" uid="uid://cmcsy2mxnl1e7" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_2.png" id="2_nyi1s"]
+[ext_resource type="Texture2D" uid="uid://ccxpafgpwdgt4" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_3.png" id="3_ats3m"]
+[ext_resource type="Texture2D" uid="uid://hrdb8cx4qxnw" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_exp3.png" id="3_brbrc"]
+[ext_resource type="Texture2D" uid="uid://b3bgpruq4br2w" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_exp4.png" id="4_dcl1h"]
+[ext_resource type="Texture2D" uid="uid://s2q6jebhva0q" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_4.png" id="4_gj5lj"]
+[ext_resource type="Texture2D" uid="uid://d0tunmpph3wkf" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_exp5.png" id="5_b60ke"]
+[ext_resource type="Texture2D" uid="uid://dko6va4fe3oin" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_5.png" id="5_krgoa"]
+[ext_resource type="Texture2D" uid="uid://008w1rnu35dy" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_exp6.png" id="6_fng4k"]
+[ext_resource type="Texture2D" uid="uid://6koy1fpkimrx" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_exp7.png" id="7_wltgq"]
+[ext_resource type="Texture2D" uid="uid://c0widu1qgoptb" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_exp8.png" id="8_lcmcn"]
+[ext_resource type="Texture2D" uid="uid://c34sqhtq5ih2b" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot5/shot5_asset.png" id="14_ieqs6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q87bx"]
+animations = [{
+"frames": [{
+"duration": 0.1,
+"texture": ExtResource("2_80pim")
+}, {
+"duration": 0.1,
+"texture": ExtResource("3_brbrc")
+}, {
+"duration": 0.1,
+"texture": ExtResource("4_dcl1h")
+}, {
+"duration": 0.1,
+"texture": ExtResource("5_b60ke")
+}, {
+"duration": 0.1,
+"texture": ExtResource("6_fng4k")
+}, {
+"duration": 0.1,
+"texture": ExtResource("7_wltgq")
+}, {
+"duration": 0.1,
+"texture": ExtResource("8_lcmcn")
+}],
+"loop": true,
+"name": &"crashed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("1_akfq6")
+}, {
+"duration": 0.2,
+"texture": ExtResource("2_nyi1s")
+}, {
+"duration": 0.2,
+"texture": ExtResource("3_ats3m")
+}, {
+"duration": 0.2,
+"texture": ExtResource("4_gj5lj")
+}, {
+"duration": 0.2,
+"texture": ExtResource("5_krgoa")
+}, {
+"duration": 20.0,
+"texture": ExtResource("14_ieqs6")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76de5"]
+size = Vector2(33, 12)
+
+[node name="CosmicChimeraShoot" type="CharacterBody2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_xgaq6")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q87bx")
+animation = &"crashed"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="ActionArea" type="Area2D" parent="."]
+
+[node name="ActionShape" type="CollisionShape2D" parent="ActionArea"]
+position = Vector2(-5.5, 2)
+shape = SubResource("RectangleShape2D_76de5")
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
+[connection signal="body_entered" from="ActionArea" to="." method="_on_action_area_body_entered"]

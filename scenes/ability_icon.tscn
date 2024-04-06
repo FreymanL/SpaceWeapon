@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfvacvcem3hcf"]
+
+[ext_resource type="Texture2D" uid="uid://1vtqieh80um4" path="res://images/timer/bg.png" id="1_dkhvf"]
+[ext_resource type="Script" path="res://scripts/ability_icon.gd" id="1_xfi18"]
+
+[node name="AbilityIcon" type="TextureProgressBar"]
+offset_right = 40.0
+offset_bottom = 40.0
+step = 0.1
+fill_mode = 4
+texture_under = ExtResource("1_dkhvf")
+tint_under = Color(1, 1, 1, 0.494118)
+script = ExtResource("1_xfi18")

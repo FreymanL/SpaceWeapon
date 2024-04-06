@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://dynkbq1hg2imn"]
+
+[ext_resource type="Script" path="res://scripts/level_completed.gd" id="1_sa3wu"]
+[ext_resource type="AudioStream" uid="uid://bcpcvqg5n0ex5" path="res://audios/message-incoming-132126.mp3" id="2_16217"]
+[ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="2_r081y"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dd6fs"]
+font = ExtResource("2_r081y")
+font_size = 14
+font_color = Color(0.247059, 0.670588, 0, 1)
+
+[sub_resource type="Theme" id="Theme_qrtjt"]
+default_font = ExtResource("2_r081y")
+
+[node name="LevelCompleted" type="Control" groups=["menu_actions"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sa3wu")
+
+[node name="PositionReferente" type="Node2D" parent="."]
+
+[node name="Background" type="ColorRect" parent="PositionReferente"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 490.0
+offset_top = 150.0
+offset_right = 790.0
+offset_bottom = 550.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.811765)
+
+[node name="SuccessLabel" type="Label" parent="PositionReferente/Background"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 64.0
+offset_right = 274.0
+offset_bottom = 90.0
+text = "Wave Exterminated"
+label_settings = SubResource("LabelSettings_dd6fs")
+
+[node name="ButtonContainer" type="VBoxContainer" parent="PositionReferente/Background"]
+layout_mode = 0
+offset_left = 162.0
+offset_top = 352.0
+offset_right = 288.0
+offset_bottom = 392.0
+theme = SubResource("Theme_qrtjt")
+
+[node name="Home" type="Button" parent="PositionReferente/Background/ButtonContainer"]
+layout_mode = 2
+text = "Home
+"
+
+[node name="SuccessAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_16217")
+autoplay = true
+
+[connection signal="pressed" from="PositionReferente/Background/ButtonContainer/Home" to="." method="_on_home_pressed"]

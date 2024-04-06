@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://btko804s8e05h"]
+
+[ext_resource type="Texture2D" uid="uid://cimork38kqgui" path="res://images/ability_slot/normal.png" id="1_rcw3t"]
+[ext_resource type="Texture2D" uid="uid://uoyda6oqtwp2" path="res://images/ability_slot/focussed.png" id="2_iodse"]
+[ext_resource type="Script" path="res://scripts/ability_slot_button.gd" id="3_ypij5"]
+
+[node name="AbilitySlotButton" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_rcw3t")
+texture_hover = ExtResource("2_iodse")
+texture_focused = ExtResource("2_iodse")
+script = ExtResource("3_ypij5")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

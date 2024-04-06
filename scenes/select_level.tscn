@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=3 uid="uid://bgvwh538xi2ey"]
+
+[ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="1_gm844"]
+[ext_resource type="Script" path="res://scripts/select_level.gd" id="1_jkbgl"]
+[ext_resource type="Texture2D" uid="uid://bwnskbgy8l8js" path="res://kenney_space-shooter-redux/Backgrounds/bglvl1icon.png" id="2_gp6ad"]
+[ext_resource type="Texture2D" uid="uid://dv3oefscc6w3k" path="res://kenney_space-shooter-redux/Backgrounds/bglvl1iconfocussed.png" id="4_6b1jh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_q5n8a"]
+font = ExtResource("1_gm844")
+
+[sub_resource type="Theme" id="Theme_02mdu"]
+default_font = ExtResource("1_gm844")
+
+[sub_resource type="LabelSettings" id="LabelSettings_ulcpe"]
+font_size = 11
+
+[sub_resource type="Theme" id="Theme_ya0j6"]
+default_font = ExtResource("1_gm844")
+default_font_size = 8
+
+[node name="LevelMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_jkbgl")
+
+[node name="SelectLvl" type="Label" parent="."]
+layout_mode = 0
+offset_left = 194.0
+offset_top = 94.0
+offset_right = 314.0
+offset_bottom = 117.0
+text = "Select"
+label_settings = SubResource("LabelSettings_q5n8a")
+horizontal_alignment = 1
+
+[node name="BackGround" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 190.0
+offset_top = 135.0
+offset_right = 1090.0
+offset_bottom = 585.0
+color = Color(0, 0, 0, 0.670588)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackGround"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 230.0
+offset_bottom = 180.0
+focus_mode = 2
+
+[node name="Level1Btn" type="TextureButton" parent="BackGround/HBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_02mdu")
+texture_normal = ExtResource("2_gp6ad")
+texture_hover = ExtResource("4_6b1jh")
+
+[node name="MissionBeginslbl" type="Label" parent="BackGround/HBoxContainer/Level1Btn"]
+layout_mode = 0
+offset_left = 28.1816
+offset_top = 155.686
+offset_right = 182.182
+offset_bottom = 178.686
+text = "Mission Begins
+"
+label_settings = SubResource("LabelSettings_ulcpe")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 540.0
+offset_right = 246.0
+offset_bottom = 557.0
+scale = Vector2(2.80891, 2.44851)
+theme = SubResource("Theme_ya0j6")
+
+[node name="Back" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back
+"
+
+[connection signal="pressed" from="BackGround/HBoxContainer/Level1Btn" to="." method="_on_level_1_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

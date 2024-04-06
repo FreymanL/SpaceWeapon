@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjjcnlqql1fv4"]
+
+[ext_resource type="Script" path="res://delta.gd" id="1_4d4pi"]
+[ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="1_osc5w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7g8du"]
+font = ExtResource("1_osc5w")
+font_color = Color(1, 0, 0, 1)
+
+[node name="Delta" type="Node2D"]
+script = ExtResource("1_4d4pi")
+
+[node name="Num" type="Label" parent="."]
+offset_right = 63.0
+offset_bottom = 30.0
+text = "-10"
+label_settings = SubResource("LabelSettings_7g8du")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

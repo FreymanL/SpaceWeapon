@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjeb1fjiku2hu"]
+
+[ext_resource type="Script" path="res://scripts/attack_drone_shoot.gd" id="1_iki0j"]
+[ext_resource type="Texture2D" uid="uid://dikxwcvco5heb" path="res://images/abilities/shoots/attack_dron_shot/laserBlue08.png" id="2_bhi2l"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6l0sm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_bhi2l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvoej"]
+size = Vector2(54, 51)
+
+[node name="AttackDroneShoot" type="CharacterBody2D"]
+script = ExtResource("1_iki0j")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6l0sm")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(1, -0.5)
+shape = SubResource("RectangleShape2D_vvoej")

@@ -1,0 +1,79 @@
+[gd_scene load_steps=14 format=3 uid="uid://c7l5l1f5s66ck"]
+
+[ext_resource type="Script" path="res://scripts/super_shoot.gd" id="1_4tkdn"]
+[ext_resource type="Texture2D" uid="uid://q48npsjpkspd" path="res://images/abilities/super_shoot/icon.png" id="2_3wdry"]
+[ext_resource type="Texture2D" uid="uid://bam6od1k2wi7" path="res://images/abilities/super_shoot/Explosion_2.png" id="2_h1fxv"]
+[ext_resource type="Texture2D" uid="uid://b1wy7gbp7tvm2" path="res://images/abilities/super_shoot/Explosion_2_1.png" id="4_wpsbc"]
+[ext_resource type="Texture2D" uid="uid://ctuohuc4amdd4" path="res://images/abilities/super_shoot/Explosion_2_2.png" id="5_myxqh"]
+[ext_resource type="Texture2D" uid="uid://kaaefhrxb01d" path="res://images/abilities/super_shoot/Explosion_2_3.png" id="6_b52iw"]
+[ext_resource type="Texture2D" uid="uid://emqbpf18f0gd" path="res://images/abilities/super_shoot/Explosion_2_4.png" id="7_hdy7k"]
+[ext_resource type="Texture2D" uid="uid://bc58b7i6adqot" path="res://images/abilities/super_shoot/Explosion_2_5.png" id="8_56asj"]
+[ext_resource type="Texture2D" uid="uid://dk2raqxl3vvwj" path="res://images/abilities/super_shoot/Explosion_1.png" id="9_56wp6"]
+[ext_resource type="Texture2D" uid="uid://br0vo5khyptiq" path="res://images/abilities/super_shoot/Explosion_2_6.png" id="9_drrar"]
+[ext_resource type="AudioStream" uid="uid://gpou7540jki5" path="res://kenney_space-shooter-redux/Bonus/ring-mod-pitcher-filt-down-103959.mp3" id="10_86xss"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kpabe"]
+size = Vector2(163, 436)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vmeev"]
+animations = [{
+"frames": [{
+"duration": 0.1,
+"texture": ExtResource("4_wpsbc")
+}, {
+"duration": 0.1,
+"texture": ExtResource("5_myxqh")
+}, {
+"duration": 0.1,
+"texture": ExtResource("6_b52iw")
+}, {
+"duration": 0.1,
+"texture": ExtResource("7_hdy7k")
+}, {
+"duration": 0.1,
+"texture": ExtResource("8_56asj")
+}, {
+"duration": 0.1,
+"texture": ExtResource("9_drrar")
+}],
+"loop": true,
+"name": &"destroying",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_56wp6")
+}, {
+"duration": 0.1,
+"texture": ExtResource("2_h1fxv")
+}],
+"loop": true,
+"name": &"growing",
+"speed": 5.0
+}]
+
+[node name="SuperShoot" type="CharacterBody2D"]
+position = Vector2(-2, -1)
+script = ExtResource("1_4tkdn")
+icon = ExtResource("2_3wdry")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(-5.5, -288)
+shape = SubResource("RectangleShape2D_kpabe")
+
+[node name="ShootAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_86xss")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0.999986, -286.5)
+rotation = -3.14159
+scale = Vector2(1, 0.707993)
+sprite_frames = SubResource("SpriteFrames_vmeev")
+animation = &"destroying"
+frame_progress = 0.808313
+
+[node name="Reset" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[connection signal="timeout" from="Reset" to="." method="_on_reset_timeout"]

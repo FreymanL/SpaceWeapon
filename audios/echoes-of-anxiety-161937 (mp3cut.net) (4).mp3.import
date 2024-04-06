@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c0g6wb11uc3fn"
+path="res://.godot/imported/echoes-of-anxiety-161937 (mp3cut.net) (4).mp3-d063b95c056d2611508a23c2656b2c27.mp3str"
+
+[deps]
+
+source_file="res://audios/echoes-of-anxiety-161937 (mp3cut.net) (4).mp3"
+dest_files=["res://.godot/imported/echoes-of-anxiety-161937 (mp3cut.net) (4).mp3-d063b95c056d2611508a23c2656b2c27.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

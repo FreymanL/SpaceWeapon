@@ -1,0 +1,116 @@
+[gd_scene load_steps=21 format=3 uid="uid://ckuamli83q2sc"]
+
+[ext_resource type="Texture2D" uid="uid://djb8jexpbk1os" path="res://images/abilities/attack_dron/ship2_body2.png" id="1_uw0sm"]
+[ext_resource type="Script" path="res://scripts/attack_drone.gd" id="1_w5e7m"]
+[ext_resource type="PackedScene" uid="uid://cjeb1fjiku2hu" path="res://scenes/attack_drone_shoot.tscn" id="2_87rux"]
+[ext_resource type="Texture2D" uid="uid://c24rd55iaomhy" path="res://images/abilities/attack_dron/icon.png" id="3_o3360"]
+[ext_resource type="Texture2D" uid="uid://dal55gh7elrsu" path="res://images/abilities/attack_dron/Explosion_1/Explosion_1.png" id="5_luqiw"]
+[ext_resource type="Script" path="res://scripts/progress_bar.gd" id="5_vnf2m"]
+[ext_resource type="Texture2D" uid="uid://n42wmy76o0ew" path="res://images/abilities/attack_dron/Explosion_1/Explosion_2.png" id="6_1odgl"]
+[ext_resource type="Texture2D" uid="uid://cek8su2almxmy" path="res://images/abilities/attack_dron/Explosion_1/Explosion_3.png" id="7_x43go"]
+[ext_resource type="Texture2D" uid="uid://c7tn65h171q7u" path="res://images/abilities/attack_dron/Explosion_1/Explosion_4.png" id="8_4a0og"]
+[ext_resource type="Texture2D" uid="uid://c87sgn47fsnvq" path="res://images/abilities/attack_dron/Explosion_1/Explosion_5.png" id="9_ppjnj"]
+[ext_resource type="Texture2D" uid="uid://coqr7j4vt6wt6" path="res://images/abilities/attack_dron/Explosion_1/Explosion_6.png" id="10_ef2nu"]
+[ext_resource type="Texture2D" uid="uid://cghjwt421eiyo" path="res://images/abilities/attack_dron/Explosion_1/Explosion_7.png" id="11_iiu3t"]
+[ext_resource type="Texture2D" uid="uid://c6e25f2548gml" path="res://images/abilities/attack_dron/Explosion_1/Explosion_8.png" id="12_4b5tq"]
+[ext_resource type="Texture2D" uid="uid://biq2aipck06r" path="res://images/abilities/attack_dron/Explosion_1/Explosion_9.png" id="13_baw4m"]
+[ext_resource type="Texture2D" uid="uid://cldkkqxpwffki" path="res://images/abilities/attack_dron/Explosion_1/Explosion_10.png" id="14_w47oq"]
+[ext_resource type="AudioStream" uid="uid://oxdvjucdvjq5" path="res://audios/abilities/attack_dron/medium-explosion-40472 (mp3cut.net).mp3" id="16_1infw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qqo1g"]
+size = Vector2(36, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_06oqu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_uw0sm")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.1,
+"texture": ExtResource("5_luqiw")
+}, {
+"duration": 0.1,
+"texture": ExtResource("6_1odgl")
+}, {
+"duration": 0.1,
+"texture": ExtResource("7_x43go")
+}, {
+"duration": 0.1,
+"texture": ExtResource("8_4a0og")
+}, {
+"duration": 0.1,
+"texture": ExtResource("9_ppjnj")
+}, {
+"duration": 0.1,
+"texture": ExtResource("10_ef2nu")
+}, {
+"duration": 0.1,
+"texture": ExtResource("11_iiu3t")
+}, {
+"duration": 0.1,
+"texture": ExtResource("12_4b5tq")
+}, {
+"duration": 0.1,
+"texture": ExtResource("13_baw4m")
+}, {
+"duration": 0.1,
+"texture": ExtResource("14_w47oq")
+}],
+"loop": true,
+"name": &"exploit",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fycrn"]
+bg_color = Color(0.6, 0.6, 0.6, 0.117647)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_78315"]
+bg_color = Color(0.27451, 0.658824, 0.0588235, 1)
+
+[node name="AttackDrone" type="CharacterBody2D"]
+script = ExtResource("1_w5e7m")
+attack_drone_shoot = ExtResource("2_87rux")
+icon = ExtResource("3_o3360")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_qqo1g")
+
+[node name="Shoot" type="Node2D" parent="."]
+
+[node name="Direction" type="Node2D" parent="Shoot"]
+position = Vector2(31, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+autostart = true
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_06oqu")
+frame_progress = 0.29523
+
+[node name="LifePointsBar" type="ProgressBar" parent="."]
+offset_left = -22.0
+offset_top = -19.0
+offset_right = 18.0
+offset_bottom = -14.0
+rotation = 1.57043
+theme_override_styles/background = SubResource("StyleBoxFlat_fycrn")
+theme_override_styles/fill = SubResource("StyleBoxFlat_78315")
+value = 50.0
+show_percentage = false
+script = ExtResource("5_vnf2m")
+metadata/_edit_use_anchors_ = true
+
+[node name="AudioDestroyed" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_1infw")
+
+[node name="SpawnPosition" type="Node2D" parent="."]
+position = Vector2(-45, -78)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,105 @@
+[gd_scene load_steps=19 format=3 uid="uid://btb6jn4ledrlm"]
+
+[ext_resource type="Script" path="res://scripts/astropajo.gd" id="1_rwvr7"]
+[ext_resource type="Texture2D" uid="uid://c1vyuxkxqpxsb" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Ship2/Ship2.png" id="2_d5tbl"]
+[ext_resource type="Texture2D" uid="uid://gagwp6lq0dri" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_5/Explosion_1.png" id="3_u2wee"]
+[ext_resource type="Texture2D" uid="uid://dbgk70s81qdb0" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_5/Explosion_2.png" id="4_fis82"]
+[ext_resource type="Texture2D" uid="uid://dgdai6hcor7jv" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_5/Explosion_3.png" id="5_ms2t4"]
+[ext_resource type="Texture2D" uid="uid://doslice3mi3fi" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_5/Explosion_4.png" id="6_2i06a"]
+[ext_resource type="Texture2D" uid="uid://cifsxtj2jepak" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_5/Explosion_5.png" id="7_mwxnn"]
+[ext_resource type="Texture2D" uid="uid://bfsxducirjajr" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_5/Explosion_6.png" id="8_dxnp6"]
+[ext_resource type="Texture2D" uid="uid://d02ml36gugejp" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_5/Explosion_7.png" id="9_y2bqt"]
+[ext_resource type="Texture2D" uid="uid://bdssbs4r70bdo" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_5/Explosion_8.png" id="10_ftl4h"]
+[ext_resource type="Texture2D" uid="uid://dl3pp5ybknwnq" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_5/Explosion_9.png" id="11_sno41"]
+[ext_resource type="Texture2D" uid="uid://bangofkrb7ps5" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_5/Explosion_10.png" id="12_11ecr"]
+[ext_resource type="AudioStream" uid="uid://dfpe12dset4bq" path="res://kenney_space-shooter-redux/Bonus/explosion-6055.mp3" id="14_ewbf5"]
+[ext_resource type="Script" path="res://scripts/progress_bar.gd" id="15_n6y6y"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ee76k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_d5tbl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.25,
+"texture": ExtResource("3_u2wee")
+}, {
+"duration": 0.25,
+"texture": ExtResource("4_fis82")
+}, {
+"duration": 0.25,
+"texture": ExtResource("5_ms2t4")
+}, {
+"duration": 0.25,
+"texture": ExtResource("6_2i06a")
+}, {
+"duration": 0.25,
+"texture": ExtResource("7_mwxnn")
+}, {
+"duration": 0.25,
+"texture": ExtResource("8_dxnp6")
+}, {
+"duration": 0.25,
+"texture": ExtResource("9_y2bqt")
+}, {
+"duration": 0.25,
+"texture": ExtResource("10_ftl4h")
+}, {
+"duration": 0.25,
+"texture": ExtResource("11_sno41")
+}, {
+"duration": 0.25,
+"texture": ExtResource("12_11ecr")
+}],
+"loop": true,
+"name": &"exploit",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5qstj"]
+radius = 61.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a3tmd"]
+bg_color = Color(0.6, 0.6, 0.6, 0.117647)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_740o8"]
+bg_color = Color(0.780392, 0.478431, 0.0745098, 1)
+
+[node name="Astropajo" type="CharacterBody2D" groups=["Enemy"]]
+script = ExtResource("1_rwvr7")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+rotation = 1.5708
+sprite_frames = SubResource("SpriteFrames_ee76k")
+
+[node name="ActionArea" type="Area2D" parent="."]
+
+[node name="ActionShape" type="CollisionShape2D" parent="ActionArea"]
+shape = SubResource("CircleShape2D_5qstj")
+
+[node name="DestroyAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_ewbf5")
+volume_db = -20.0
+
+[node name="Shoot" type="Node2D" parent="."]
+
+[node name="Direction" type="Node2D" parent="Shoot"]
+position = Vector2(0, 47)
+
+[node name="LifePointsBar" type="ProgressBar" parent="."]
+offset_left = -26.0
+offset_top = 35.0
+offset_right = 24.0
+offset_bottom = 40.0
+theme_override_styles/background = SubResource("StyleBoxFlat_a3tmd")
+theme_override_styles/fill = SubResource("StyleBoxFlat_740o8")
+value = 50.0
+show_percentage = false
+script = ExtResource("15_n6y6y")
+
+[connection signal="body_entered" from="ActionArea" to="." method="_on_area_2d_body_entered"]
