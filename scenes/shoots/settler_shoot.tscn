@@ -1,0 +1,90 @@
+[gd_scene load_steps=19 format=3 uid="uid://dosikdluh2rih"]
+
+[ext_resource type="Texture2D" uid="uid://c4lgpfj5o74vm" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_exp1.png" id="1_fh33g"]
+[ext_resource type="Texture2D" uid="uid://b5xxvj53ysqjp" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_1.png" id="1_ic3qh"]
+[ext_resource type="Script" path="res://settler_shoot.gd" id="1_kvfk4"]
+[ext_resource type="Texture2D" uid="uid://n4l4jjjvr0t4" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_2.png" id="2_21xk8"]
+[ext_resource type="Texture2D" uid="uid://d2sjqa0vwr5p4" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_exp2.png" id="2_f8pqc"]
+[ext_resource type="Texture2D" uid="uid://uosqsi480cgw" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_3.png" id="3_28xky"]
+[ext_resource type="Texture2D" uid="uid://dtjx11w6g1ig" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_exp3.png" id="3_61oi2"]
+[ext_resource type="Texture2D" uid="uid://b6y1x1hw3njm8" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_4.png" id="4_c6g7l"]
+[ext_resource type="Texture2D" uid="uid://cffnbj8kwg10k" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_exp4.png" id="4_r3s5f"]
+[ext_resource type="Texture2D" uid="uid://sfiasvvtjuwu" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_asset.png" id="5_3vswb"]
+[ext_resource type="Texture2D" uid="uid://frqe1jjbf5vr" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_exp5.png" id="5_6arbv"]
+[ext_resource type="Texture2D" uid="uid://dic5ld4yehogl" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_exp6.png" id="6_yuj0i"]
+[ext_resource type="Texture2D" uid="uid://ckg7rkb8fs780" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_exp7.png" id="7_043rv"]
+[ext_resource type="Texture2D" uid="uid://cglk4nffhbr2h" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_exp8.png" id="8_jjlpd"]
+[ext_resource type="Texture2D" uid="uid://bdmuq32wxljb0" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_exp9.png" id="9_ukyrd"]
+[ext_resource type="Texture2D" uid="uid://d2lght1rmktaj" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Shots/Shot6/shot6_exp10.png" id="10_jecju"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tcy5f"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tfjdn"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("1_fh33g")
+}, {
+"duration": 0.2,
+"texture": ExtResource("2_f8pqc")
+}, {
+"duration": 0.2,
+"texture": ExtResource("3_61oi2")
+}, {
+"duration": 0.2,
+"texture": ExtResource("4_r3s5f")
+}, {
+"duration": 0.2,
+"texture": ExtResource("5_6arbv")
+}, {
+"duration": 0.2,
+"texture": ExtResource("6_yuj0i")
+}, {
+"duration": 0.2,
+"texture": ExtResource("7_043rv")
+}, {
+"duration": 0.2,
+"texture": ExtResource("8_jjlpd")
+}, {
+"duration": 0.2,
+"texture": ExtResource("9_ukyrd")
+}, {
+"duration": 0.2,
+"texture": ExtResource("10_jecju")
+}],
+"loop": true,
+"name": &"crashed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ic3qh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_21xk8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_28xky")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_c6g7l")
+}, {
+"duration": 20.0,
+"texture": ExtResource("5_3vswb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="SettlerShoot" type="Area2D"]
+script = ExtResource("1_kvfk4")
+
+[node name="ActionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_tcy5f")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tfjdn")
+frame_progress = 0.740835
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -1,0 +1,77 @@
+[gd_scene load_steps=15 format=3 uid="uid://deglkowlatlkh"]
+
+[ext_resource type="Script" path="res://scripts/settler_misil.gd" id="1_pm5bk"]
+[ext_resource type="Texture2D" uid="uid://hf7njpv6sqq5" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Ship6/Parts/ship6_detail3.png" id="1_w8hdd"]
+[ext_resource type="Texture2D" uid="uid://6j8ua70g5xmx" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_1.png" id="2_74cj6"]
+[ext_resource type="Texture2D" uid="uid://decl4ys2s3sxa" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_2.png" id="3_wohm0"]
+[ext_resource type="Texture2D" uid="uid://cah61y6ogkchg" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_3.png" id="4_joxdo"]
+[ext_resource type="Texture2D" uid="uid://iiwcr62dolo2" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_4.png" id="5_rv870"]
+[ext_resource type="Texture2D" uid="uid://8wv4rupcj0fg" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_5.png" id="6_pdoge"]
+[ext_resource type="Texture2D" uid="uid://cyhp2yqbroiru" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_6.png" id="7_ele1w"]
+[ext_resource type="Texture2D" uid="uid://1vg4vwajwby" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_7.png" id="8_t1621"]
+[ext_resource type="Texture2D" uid="uid://1bt7nbbj6ci4" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_8.png" id="9_36sil"]
+[ext_resource type="Texture2D" uid="uid://dk2j11lbv70pe" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_9.png" id="10_okfnd"]
+[ext_resource type="Texture2D" uid="uid://bu760tqka0lib" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_10.png" id="11_30pya"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f73j0"]
+radius = 120.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6jqoa"]
+animations = [{
+"frames": [{
+"duration": 0.2,
+"texture": ExtResource("2_74cj6")
+}, {
+"duration": 0.2,
+"texture": ExtResource("3_wohm0")
+}, {
+"duration": 0.2,
+"texture": ExtResource("4_joxdo")
+}, {
+"duration": 0.2,
+"texture": ExtResource("5_rv870")
+}, {
+"duration": 0.2,
+"texture": ExtResource("6_pdoge")
+}, {
+"duration": 0.2,
+"texture": ExtResource("7_ele1w")
+}, {
+"duration": 0.2,
+"texture": ExtResource("8_t1621")
+}, {
+"duration": 0.2,
+"texture": ExtResource("9_36sil")
+}, {
+"duration": 0.2,
+"texture": ExtResource("10_okfnd")
+}, {
+"duration": 0.2,
+"texture": ExtResource("11_30pya")
+}],
+"loop": true,
+"name": &"crashed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_w8hdd")
+}],
+"loop": true,
+"name": &"shoot",
+"speed": 5.0
+}]
+
+[node name="SettlerMisil" type="Area2D"]
+script = ExtResource("1_pm5bk")
+
+[node name="ActionArea" type="CollisionShape2D" parent="."]
+position = Vector2(-1.5, 0.5)
+shape = SubResource("CircleShape2D_f73j0")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6jqoa")
+animation = &"crashed"
+frame_progress = 0.360748
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

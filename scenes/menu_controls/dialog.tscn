@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://bst50ngb7jb8n"]
+
+[ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="1_bpuqm"]
+[ext_resource type="Script" path="res://scripts/dialog.gd" id="1_kp7jm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_klgfd"]
+font = ExtResource("1_bpuqm")
+font_size = 12
+
+[node name="Dialog" type="Node2D" groups=["NodeDescriptionDialog"]]
+script = ExtResource("1_kp7jm")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 553.0
+offset_bottom = 41.0
+color = Color(0, 0, 0, 0.313726)
+
+[node name="Text" type="Label" parent="Background"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 550.0
+offset_bottom = 37.0
+label_settings = SubResource("LabelSettings_klgfd")
+autowrap_mode = 3
+visible_characters = 0
+visible_characters_behavior = 3
+visible_ratio = 0.0
+
+[node name="DisplayTextTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="DisplayTextTimer" to="." method="_on_display_text_timer_timeout"]

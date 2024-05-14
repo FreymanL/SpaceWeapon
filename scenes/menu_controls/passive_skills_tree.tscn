@@ -1,0 +1,270 @@
+[gd_scene load_steps=10 format=3 uid="uid://8ppiun8fwo6m"]
+
+[ext_resource type="Script" path="res://scripts/passive_skills_tree.gd" id="1_maxty"]
+[ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="1_q65bt"]
+[ext_resource type="PackedScene" uid="uid://ly8e2k6vbbgo" path="res://scenes/menu_controls/passive_skil_node.tscn" id="2_m16oi"]
+[ext_resource type="PackedScene" uid="uid://bst50ngb7jb8n" path="res://scenes/menu_controls/dialog.tscn" id="4_qvwfd"]
+[ext_resource type="PackedScene" uid="uid://brs3q5sh5naxg" path="res://scenes/menu_controls/path.tscn" id="5_c5ea8"]
+[ext_resource type="Texture2D" uid="uid://bmsknp2hy68ot" path="res://images/ability_tree/reestart.png" id="6_ckhjf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0y34a"]
+font = ExtResource("1_q65bt")
+
+[sub_resource type="Theme" id="Theme_xugc8"]
+default_font = ExtResource("1_q65bt")
+default_font_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_4xve7"]
+font = ExtResource("1_q65bt")
+font_size = 14
+font_color = Color(1, 0, 0, 1)
+
+[node name="PassiveSkillsTree" type="Control" groups=["PassiveSkillsTree"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_maxty")
+
+[node name="Path" parent="." instance=ExtResource("5_c5ea8")]
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 60.0
+offset_right = 1190.0
+offset_bottom = 660.0
+color = Color(0, 0, 0, 0.670588)
+
+[node name="SubTitleContainer" type="Label" parent="Background"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 17.0
+offset_right = 377.0
+offset_bottom = 40.0
+text = "Ability Points: 3"
+label_settings = SubResource("LabelSettings_0y34a")
+
+[node name="Essencials" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 526.0
+offset_top = 510.0
+offset_right = 926.0
+offset_bottom = 910.0
+scale = Vector2(0.13, 0.13)
+skill_id = "base"
+
+[node name="Destroyer" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 501.0
+offset_right = 680.0
+offset_bottom = 901.0
+scale = Vector2(0.13, 0.13)
+
+[node name="Frenetic" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 247.0
+offset_top = 366.0
+offset_right = 647.0
+offset_bottom = 766.0
+scale = Vector2(0.13, 0.13)
+skill_id = "2d"
+
+[node name="Collateral" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 464.0
+offset_right = 479.0
+offset_bottom = 864.0
+scale = Vector2(0.13, 0.13)
+skill_id = "3d"
+
+[node name="Annihilator" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 107.0
+offset_top = 353.0
+offset_right = 507.0
+offset_bottom = 753.0
+scale = Vector2(0.13, 0.13)
+skill_id = "4d"
+
+[node name="Stealer" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 180.0
+offset_top = 249.0
+offset_right = 580.0
+offset_bottom = 649.0
+scale = Vector2(0.13, 0.13)
+skill_id = "5d"
+
+[node name="Tenacious" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 443.0
+offset_top = 303.0
+offset_right = 843.0
+offset_bottom = 703.0
+scale = Vector2(0.13, 0.13)
+skill_id = "1r"
+
+[node name="Shield" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 292.0
+offset_top = 179.0
+offset_right = 692.0
+offset_bottom = 579.0
+scale = Vector2(0.13, 0.13)
+skill_id = "2r"
+
+[node name="Protector" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 404.0
+offset_top = 131.0
+offset_right = 804.0
+offset_bottom = 531.0
+scale = Vector2(0.13, 0.13)
+skill_id = "3r"
+
+[node name="Unreachable" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 524.0
+offset_top = 110.0
+offset_right = 924.0
+offset_bottom = 510.0
+scale = Vector2(0.13, 0.13)
+skill_id = "4r"
+
+[node name="Hopeful" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 774.0
+offset_top = 162.0
+offset_right = 1174.0
+offset_bottom = 562.0
+scale = Vector2(0.13, 0.13)
+skill_id = "2c"
+
+[node name="Brave" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 653.0
+offset_top = 300.0
+offset_right = 1053.0
+offset_bottom = 700.0
+scale = Vector2(0.13, 0.13)
+skill_id = "1c"
+
+[node name="Persistent" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 881.0
+offset_top = 236.0
+offset_right = 1281.0
+offset_bottom = 636.0
+scale = Vector2(0.13, 0.13)
+skill_id = "3c"
+
+[node name="Tank" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 654.0
+offset_top = 130.0
+offset_right = 1054.0
+offset_bottom = 530.0
+scale = Vector2(0.13, 0.13)
+skill_id = "4c"
+
+[node name="Skilled" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 482.0
+offset_right = 1150.0
+offset_bottom = 882.0
+scale = Vector2(0.13, 0.13)
+skill_id = "1e"
+
+[node name="Engineer" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 972.0
+offset_top = 465.0
+offset_right = 1372.0
+offset_bottom = 865.0
+scale = Vector2(0.13, 0.13)
+skill_id = "2e"
+
+[node name="Focussed" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 942.0
+offset_top = 351.0
+offset_right = 1342.0
+offset_bottom = 751.0
+scale = Vector2(0.13, 0.13)
+skill_id = "3e"
+
+[node name="Shooter" parent="Background" instance=ExtResource("2_m16oi")]
+layout_mode = 0
+offset_left = 370.0
+offset_top = 422.0
+offset_right = 770.0
+offset_bottom = 822.0
+scale = Vector2(0.13, 0.13)
+skill_id = "6d"
+
+[node name="Descriptions" parent="Background" instance=ExtResource("4_qvwfd")]
+position = Vector2(543, 5)
+
+[node name="BackContainer2" type="VBoxContainer" parent="Background"]
+layout_mode = 0
+offset_left = 969.0
+offset_top = 559.0
+offset_right = 1015.0
+offset_bottom = 576.0
+scale = Vector2(2.80891, 2.44851)
+theme = SubResource("Theme_xugc8")
+
+[node name="Save" type="Button" parent="Background/BackContainer2"]
+layout_mode = 2
+text = "Save
+"
+
+[node name="TextureButton" type="TextureButton" parent="Background"]
+layout_mode = 0
+offset_left = 1021.0
+offset_top = 58.0
+offset_right = 1221.0
+offset_bottom = 258.0
+scale = Vector2(0.3, 0.3)
+texture_normal = ExtResource("6_ckhjf")
+
+[node name="TitleContainer" type="Label" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 25.0
+offset_right = 456.0
+offset_bottom = 48.0
+text = "set up your skills tree"
+label_settings = SubResource("LabelSettings_0y34a")
+
+[node name="WarningLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 95.0
+offset_top = 658.0
+offset_right = 327.0
+offset_bottom = 702.0
+label_settings = SubResource("LabelSettings_4xve7")
+
+[node name="BackContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 617.0
+offset_right = 134.0
+offset_bottom = 634.0
+scale = Vector2(2.80891, 2.44851)
+theme = SubResource("Theme_xugc8")
+
+[node name="Back" type="Button" parent="BackContainer"]
+layout_mode = 2
+text = "Back
+"
+
+[connection signal="pressed" from="Background/BackContainer2/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Background/TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="BackContainer/Back" to="." method="_on_back_pressed"]

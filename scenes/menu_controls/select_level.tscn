@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgvwh538xi2ey"]
+
+[ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="1_gm844"]
+[ext_resource type="Script" path="res://scripts/select_level.gd" id="1_jkbgl"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_q5n8a"]
+font = ExtResource("1_gm844")
+
+[sub_resource type="Theme" id="Theme_ya0j6"]
+default_font = ExtResource("1_gm844")
+default_font_size = 8
+
+[node name="LevelMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_jkbgl")
+
+[node name="SelectLvl" type="Label" parent="."]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 25.0
+offset_right = 208.0
+offset_bottom = 48.0
+text = "Select"
+label_settings = SubResource("LabelSettings_q5n8a")
+horizontal_alignment = 1
+
+[node name="BackGround" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 60.0
+offset_right = 1190.0
+offset_bottom = 660.0
+color = Color(0, 0, 0, 0.670588)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="BackGround"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 434.0
+offset_bottom = 180.0
+pivot_offset = Vector2(100, 100)
+focus_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 92.0
+offset_top = 618.0
+offset_right = 138.0
+offset_bottom = 635.0
+scale = Vector2(2.80891, 2.44851)
+theme = SubResource("Theme_ya0j6")
+
+[node name="Back" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back
+"
+
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

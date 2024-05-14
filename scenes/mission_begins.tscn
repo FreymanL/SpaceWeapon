@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://4yr4hw8xvmr0"]
-
-[ext_resource type="Texture2D" uid="uid://ce8gfwm8gwhrf" path="res://images/backgrounds/BgMissionBegins.png" id="1_o7cx4"]
-
-[node name="MissionBegins" type="Node2D"]
-
-[node name="BgMissionBegins" type="Sprite2D" parent="."]
-position = Vector2(642, -775)
-texture = ExtResource("1_o7cx4")

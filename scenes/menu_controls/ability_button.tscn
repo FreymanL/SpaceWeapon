@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cep23g3k70ffu"]
+
+[ext_resource type="Script" path="res://scripts/ability_button.gd" id="1_2rbes"]
+
+[node name="AbilityButton" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_2rbes")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

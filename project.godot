@@ -15,10 +15,16 @@ run/main_scene="res://scenes/scene_manager.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+UserData="*res://scripts/user_data.gd"
+Settings="*res://scenes/settings.tscn"
+
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/resizable=false
 
 [editor]
 

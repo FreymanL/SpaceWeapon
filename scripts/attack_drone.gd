@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Area2D
 
 @onready var sprite = $Sprite
 
@@ -7,9 +7,11 @@ extends CharacterBody2D
 
 @onready var life_bar = $LifePointsBar
 @onready var collision_shape = $CollisionShape2D
-@onready var delta = load("res://scenes/delta.tscn")
 @onready var audio_destroyed = $AudioDestroyed
 @onready var start_position = $SpawnPosition
+
+@onready var delta = load("res://scenes/delta.tscn")
+@onready var booster_manager = get_tree().get_first_node_in_group("BoosterManager")
 
 var speed = 100
 var current_enemy
@@ -17,22 +19,23 @@ var is_ship_destroyed = false
 var rng = RandomNumberGenerator.new()
 var cooldown = 10
 var ship
-var MAX_LIFE_POINTS = 30
-var life_points = 30
+var max_life_points = 300
+var life_points = 300
 var is_destroying = false
+var duration = 0.0
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	var world = get_tree().get_first_node_in_group("Mundo")
 	world.connect("level_has_completed", destroy)
 	var ship = get_tree().get_first_node_in_group("Ship")
 	global_position = ship.global_position
 	global_position = start_position.global_position
-	velocity.y = 0
 	sprite.play("default")
-	life_bar.max_value = MAX_LIFE_POINTS
+	max_life_points = booster_manager.calculate_drone_life_points(max_life_points)
+	life_bar.max_value = max_life_points
+	life_points = max_life_points
 	life_bar.value = life_points
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
 	life_bar.rotation = -rotation
 	life_bar.global_position = global_position + Vector2(-25,30)
@@ -52,7 +55,6 @@ func _on_timer_timeout():
 	else:
 		find_target()
 
-	
 
 func find_target():
 	var new_enemy = get_tree().get_first_node_in_group("Enemy")
@@ -68,25 +70,24 @@ func shoot():
 	shoot_instance.name += str(num)
 	shoot_instance.current_target = current_enemy
 	shoot_instance.global_position = $Shoot/Direction.global_position
-	get_tree().call_group("Shoots", "add_child", shoot_instance)
+	get_tree().call_group("Mundo", "add_child", shoot_instance)
 
-func damage_received(damage):
+
+func normal_damage_received(damage):
 	if is_destroying:
 		return
-	life_points -= damage
-	life_bar.set_current_life_points(life_points)
-	show_damage(damage)
+	var real_damage: float = booster_manager.calculate_drone_damage_received(damage)
+	life_points -= real_damage
+	update_life_bar()
 	if life_points <= 0:
 		destroy()
+	return real_damage
 
-func show_damage(damage):
-	var delta_instance = delta.instantiate()
-	delta_instance.global_position = global_position
-	get_tree().call_group("Mundo", "add_child", delta_instance)
-	delta_instance.show_damage(damage)
+func update_life_bar():
+	life_bar.set_current_life_points(life_points)
 
 func get_health(health):
-	life_points = min(life_points + health, MAX_LIFE_POINTS)
+	life_points = min(life_points + health, max_life_points)
 	life_bar.set_current_life_points(life_points)
 	show_health(health)
 
@@ -104,3 +105,6 @@ func destroy():
 	sprite.play("exploit")
 	await get_tree().create_timer(0.8).timeout
 	queue_free()
+
+func get_real_name():
+	return "AttackDrone"

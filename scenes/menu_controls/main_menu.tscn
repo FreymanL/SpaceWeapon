@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://p5ql03snvd7j"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_x6uos"]
+[ext_resource type="Texture2D" uid="uid://dokk6tfv4lft5" path="res://images/backgrounds/bgmenu.png" id="2_l32du"]
+[ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="3_f68te"]
+[ext_resource type="AudioStream" uid="uid://c0g6wb11uc3fn" path="res://audios/echoes-of-anxiety-161937 (mp3cut.net) (4).mp3" id="3_w0g5q"]
+[ext_resource type="PackedScene" uid="uid://bgvwh538xi2ey" path="res://scenes/menu_controls/select_level.tscn" id="5_324gh"]
+[ext_resource type="PackedScene" uid="uid://bvqjrgpb8jt7" path="res://scenes/menu_controls/select_abilities_menu.tscn" id="7_ahu4q"]
+[ext_resource type="PackedScene" uid="uid://8ppiun8fwo6m" path="res://scenes/menu_controls/passive_skills_tree.tscn" id="7_efpd1"]
+[ext_resource type="PackedScene" uid="uid://bhrl2dev3d7qx" path="res://scenes/menu_controls/upgrades_menu.tscn" id="8_65v8e"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u1gkb"]
+font = ExtResource("3_f68te")
+font_size = 40
+
+[sub_resource type="Theme" id="Theme_ng6us"]
+default_font = ExtResource("3_f68te")
+default_font_size = 25
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x6uos")
+
+[node name="MenuBackground" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
+texture = ExtResource("2_l32du")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 100.0
+offset_right = 880.0
+offset_bottom = 158.0
+text = "Space Weapon
+"
+label_settings = SubResource("LabelSettings_u1gkb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+offset_left = 540.0
+offset_top = 345.0
+offset_right = 740.0
+offset_bottom = 375.0
+theme = SubResource("Theme_ng6us")
+
+[node name="Play" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "PLAY"
+
+[node name="Upgrades" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "UPGRADES"
+
+[node name="MenuAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_w0g5q")
+autoplay = true
+
+[node name="LevelMenu" parent="." instance=ExtResource("5_324gh")]
+visible = false
+
+[node name="SelectAbilitiesMenu" parent="." instance=ExtResource("7_ahu4q")]
+visible = false
+layout_mode = 1
+
+[node name="PassiveSkillsTree" parent="." instance=ExtResource("7_efpd1")]
+visible = false
+layout_mode = 1
+
+[node name="UpgradesMenu" parent="." instance=ExtResource("8_65v8e")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="ButtonContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="ButtonContainer/Upgrades" to="." method="_on_upgrades_pressed"]

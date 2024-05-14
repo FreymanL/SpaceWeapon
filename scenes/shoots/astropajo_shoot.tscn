@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://7ai28lggpaxo"]
+
+[ext_resource type="Script" path="res://scripts/astropajo_shoot.gd" id="1_cu06m"]
+[ext_resource type="Texture2D" uid="uid://xe0qdjuaw0ob" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot2/shot2_exp2.png" id="2_yomne"]
+[ext_resource type="Texture2D" uid="uid://xjvxmstrrilo" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot2/shot2_exp3.png" id="3_8iuok"]
+[ext_resource type="Texture2D" uid="uid://rpq2hnqu8247" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot2/shot2_exp4.png" id="4_mcu87"]
+[ext_resource type="Texture2D" uid="uid://d2oq54bh8e7jw" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot2/shot2_exp5.png" id="5_ykc1g"]
+[ext_resource type="Texture2D" uid="uid://bbdvplemmt654" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Shots/Shot2/shot2_3.png" id="6_vyls1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o81u7"]
+animations = [{
+"frames": [{
+"duration": 0.1,
+"texture": ExtResource("2_yomne")
+}, {
+"duration": 0.1,
+"texture": ExtResource("3_8iuok")
+}, {
+"duration": 0.1,
+"texture": ExtResource("4_mcu87")
+}, {
+"duration": 0.1,
+"texture": ExtResource("5_ykc1g")
+}],
+"loop": true,
+"name": &"crashed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_vyls1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lri5s"]
+size = Vector2(22, 14)
+
+[node name="AstropajoShoot" type="Area2D"]
+script = ExtResource("1_cu06m")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 11)
+rotation = 1.57542
+sprite_frames = SubResource("SpriteFrames_o81u7")
+animation = &"crashed"
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="ActionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 20)
+shape = SubResource("RectangleShape2D_lri5s")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

@@ -1,0 +1,130 @@
+[gd_scene load_steps=20 format=3 uid="uid://ben0ioukwtpst"]
+
+[ext_resource type="Script" path="res://scripts/settler.gd" id="1_7mupc"]
+[ext_resource type="Texture2D" uid="uid://c5h20d65x35a0" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_000.png" id="2_6qdjx"]
+[ext_resource type="Texture2D" uid="uid://b7chykfwjymry" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Ship6/Ship6.png" id="2_gaac4"]
+[ext_resource type="Texture2D" uid="uid://b1fhr4fca7d8o" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_004.png" id="3_cixhj"]
+[ext_resource type="Script" path="res://scripts/progress_bar.gd" id="3_tfb5q"]
+[ext_resource type="AudioStream" uid="uid://dfpe12dset4bq" path="res://kenney_space-shooter-redux/Bonus/explosion-6055.mp3" id="4_k6578"]
+[ext_resource type="Texture2D" uid="uid://cgc6dtbcnjel" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_005.png" id="4_wsq4s"]
+[ext_resource type="Texture2D" uid="uid://da828vx6i1dle" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_007.png" id="5_86b4m"]
+[ext_resource type="Texture2D" uid="uid://dxlv7mmukpd2y" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_009.png" id="6_rdr8g"]
+[ext_resource type="Texture2D" uid="uid://c71wnodutkxxo" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_011.png" id="7_3rrh3"]
+[ext_resource type="Texture2D" uid="uid://wcuf0j1rrbms" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_013.png" id="8_m48kg"]
+[ext_resource type="Texture2D" uid="uid://b18n318f2gefc" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_016.png" id="9_fmbr7"]
+[ext_resource type="Texture2D" uid="uid://ceobm3vprcivv" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_017.png" id="10_16x07"]
+[ext_resource type="Texture2D" uid="uid://cpiprlbrwtv5m" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_019.png" id="11_n27nj"]
+[ext_resource type="Texture2D" uid="uid://bdqyf8ejb83cv" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Animations/Explosions/Ship6_Explosion/Ship6_Explosion_021.png" id="12_e2qjd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_agljh"]
+size = Vector2(79, 117)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_syrj0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gaac4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.3,
+"texture": ExtResource("2_6qdjx")
+}, {
+"duration": 0.3,
+"texture": ExtResource("3_cixhj")
+}, {
+"duration": 0.3,
+"texture": ExtResource("4_wsq4s")
+}, {
+"duration": 0.3,
+"texture": ExtResource("5_86b4m")
+}, {
+"duration": 0.2,
+"texture": ExtResource("6_rdr8g")
+}, {
+"duration": 0.3,
+"texture": ExtResource("7_3rrh3")
+}, {
+"duration": 0.3,
+"texture": ExtResource("8_m48kg")
+}, {
+"duration": 0.3,
+"texture": ExtResource("9_fmbr7")
+}, {
+"duration": 0.3,
+"texture": ExtResource("10_16x07")
+}, {
+"duration": 0.3,
+"texture": ExtResource("11_n27nj")
+}, {
+"duration": 0.3,
+"texture": ExtResource("12_e2qjd")
+}],
+"loop": true,
+"name": &"exploit",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01rym"]
+bg_color = Color(0.6, 0.6, 0.6, 0.117647)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mc0q6"]
+bg_color = Color(0.780392, 0.478431, 0.0745098, 1)
+
+[node name="Settler" type="Area2D" groups=["Enemy"]]
+script = ExtResource("1_7mupc")
+
+[node name="ActionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_agljh")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+rotation = 1.5708
+sprite_frames = SubResource("SpriteFrames_syrj0")
+frame_progress = 0.644551
+
+[node name="Shoot1" type="Node2D" parent="."]
+position = Vector2(0, 75)
+
+[node name="Shoot2" type="Node2D" parent="."]
+position = Vector2(-31, 64)
+
+[node name="Shoot3" type="Node2D" parent="."]
+position = Vector2(36, 61)
+
+[node name="Destiny1" type="Node2D" parent="."]
+position = Vector2(0, 500)
+
+[node name="Destiny2" type="Node2D" parent="."]
+position = Vector2(-300, 500)
+
+[node name="Destiny3" type="Node2D" parent="."]
+position = Vector2(300, 500)
+
+[node name="LifePointsBar" type="ProgressBar" parent="."]
+offset_left = -50.0
+offset_top = 70.0
+offset_right = 50.0
+offset_bottom = 75.0
+theme_override_styles/background = SubResource("StyleBoxFlat_01rym")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mc0q6")
+value = 50.0
+show_percentage = false
+script = ExtResource("3_tfb5q")
+
+[node name="DestroyAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_k6578")
+volume_db = -20.0
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="MoveTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]

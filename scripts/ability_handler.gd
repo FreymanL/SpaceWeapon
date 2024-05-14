@@ -1,5 +1,7 @@
 extends Node2D
 
+@onready var booster_manager : Node2D = get_tree().get_first_node_in_group("BoosterManager")
+
 var in_cooldown = false
 var current_cooldown = 0.0
 var max_cooldown
@@ -18,9 +20,9 @@ func _ready():
 	
 
 func load_ability(ability_name_, num_):
-	ability = load("res://scenes/"+ability_name_+".tscn")
+	ability = load("res://scenes/abilities/"+ability_name_+".tscn")
 	var ability_instance = ability.instantiate()
-	max_cooldown = ability_instance.cooldown
+	max_cooldown = booster_manager.calculate_skill_cooldown(ability_instance.cooldown)
 	icon = ability_instance.icon
 	ability_name = ability_name_
 	num = num_

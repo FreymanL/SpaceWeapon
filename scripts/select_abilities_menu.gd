@@ -1,7 +1,6 @@
 extends Control
 
-@onready var ability_1_btn = $PositionReference/Background/SlotsContainer/Ability1
-@onready var ability_2_btn = $PositionReference/Background/SlotsContainer/Ability2
+@onready var abilities_container = $PositionReference/Background/AbilitiesContainer
 @onready var super_shoot_btn = $PositionReference/Background/AbilitiesContainer/SuperShootButton
 @onready var shield_btn = $PositionReference/Background/AbilitiesContainer/ShieldButton
 @onready var double_shoot_btn = $PositionReference/Background/AbilitiesContainer/DoubleShootButton
@@ -9,17 +8,18 @@ extends Control
 @onready var attack_drone_btn = $PositionReference/Background/AbilitiesContainer/AttackDroneButton
 @onready var energy_burst_btn = $PositionReference/Background/AbilitiesContainer/EnergyBurstButton
 @onready var slots_container = $PositionReference/Background/SlotsContainer
-@onready var slot = load("res://scenes/ability_slot_button.tscn")
+@onready var slot = load("res://scenes/menu_controls/ability_slot_button.tscn")
+@onready var ability_btn = load("res://scenes/menu_controls/ability_button.tscn")
 @onready var settings = load("res://scenes/settings.tscn").instantiate()
 var slot_selected : TextureButton
 var abilities = {}
 var num_abilities = 3
 var slots = {}
 var world_info
+var available_abilities = {}
 
 signal abilities_selected(abilities)
 signal abilities_selected_canceled
-
 
 func _ready():
 	pass
@@ -32,8 +32,15 @@ func load_slots():
 		slot_instance.connect("button_has_pressed", set_slot_selected)
 		slots[i] = slot_instance
 
-func _process(delta):
-	pass
+func load_abilities():
+	UserData.load_data()
+	var user_abilities: Dictionary = UserData.user_data.abilities
+	for ability_id in user_abilities:
+		var ability_instance = ability_btn.instantiate()
+		abilities_container.add_child(ability_instance)
+		ability_instance.set_ability(ability_id)
+		ability_instance.connect("ability_selected", process_ability_selected)
+		available_abilities[ability_id] = ability_instance
 
 func set_slot_selected(num: int):
 	slot_selected = slots[num]
@@ -41,25 +48,26 @@ func set_slot_selected(num: int):
 func load_parameters(level: String):
 	for slot in slots:
 		slots[slot].queue_free()
-	world_info = settings.get_key(level)
+	for abilities in available_abilities:
+		available_abilities[abilities].queue_free()
+	world_info = settings.get_key("worlds")[level]
 	num_abilities = world_info["num_abilities"]
 	load_slots()
+	load_abilities()
+		
 
-func set_ability(ability_name : String, icon):
+func process_ability_selected(ability: TextureButton):
 	if slot_selected == null:
 		return
-	slot_selected.texture_normal = icon
-	abilities[slot_selected.num] = ability_name
-
-func emit_abilities_selected():
-	emit_signal("abilities_selected", abilities)
+	slot_selected.texture_normal = ability.texture_normal
+	abilities[slot_selected.num] = ability.ability_id
 
 func _on_go_pressed():
 	var abilities_selected = len(abilities)
 	if abilities_selected != num_abilities:
 		warning_label.text = "Select " + str(num_abilities) + " " + check_plural(num_abilities)
 		return
-	emit_abilities_selected()
+	emit_signal("abilities_selected", abilities)
 	
 func check_plural(num_abilities):
 	if num_abilities == 1:
@@ -69,20 +77,4 @@ func check_plural(num_abilities):
 func _on_back_pressed():
 	emit_signal("abilities_selected_canceled")
 
-func _on_super_shoot_button_pressed():
-	set_ability("super_shoot", super_shoot_btn.texture_normal)
-
-func _on_shield_button_pressed():
-	set_ability("shield", shield_btn.texture_normal)
-
-func _on_double_shoot_button_pressed():
-	set_ability("doble_shoot", double_shoot_btn.texture_normal)
-
-
-func _on_attack_drone_button_pressed():
-	set_ability("attack_drone", attack_drone_btn.texture_normal)
-
-
-func _on_energy_burst_button_pressed():
-	set_ability("energy_burst", energy_burst_btn.texture_normal)
 

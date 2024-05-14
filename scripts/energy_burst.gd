@@ -1,50 +1,53 @@
-extends CharacterBody2D
+extends Area2D
 
 @onready var sprite = $Sprite
 @onready var audio = $Audio
 @export var icon : CompressedTexture2D
 @onready var collision_shape = $CollisionShape2D
+@onready var booster_manager: Node2D = get_tree().get_first_node_in_group("BoosterManager")
+@onready var interaction_manager = get_tree().get_first_node_in_group("InteractionManager")
+@onready var execution_time = $ExecutionTime
+
+var targets = {
+	"astropajo": true,
+	"cosmic_chimera": true,
+	"settler": true,
+}
+
+var damage_stats = {
+	"normal_damage": 60
+}
+
+signal reached_target(shoot: Area2D, target: Area2D)
+
 var duration = 10
 var is_active = false
 var ship
 var cooldown = 20
-var damage = 6
 var reset = false
 var boost_speed = 1.5
 
 func _ready():
+	duration = booster_manager.calculate_skill_duration(duration)
+	execution_time.start(duration)
+	interaction_manager.connect_with(self)
 	sprite.play("default")
-	ship.collision_shape.disabled = true
-	ship.SPEED *= boost_speed
+	ship.speed *= boost_speed
 	execute()
 
 func _process(delta):
 	if ship.is_destroying || ship.level_completed:
-		destroy()
-	global_position.x = ship.global_position.x
-	global_position.y = ship.global_position.y
+		queue_free()
+	global_position = ship.global_position
 
 func execute():
 	audio.play()
+	damage_stats["normal_damage"] = booster_manager.calculate_area_damage(damage_stats["normal_damage"])
 	is_active = true
 	ship.shoot_is_disabled = true
 	sprite.play("growing")
 	await get_tree().create_timer(0.2).timeout
 	sprite.play("destroying")
-	await get_tree().create_timer(duration - 0.2).timeout
-	is_active = false
-	ship.shoot_is_disabled = false
-	destroy()
-
-func destroy():
-	ship.SPEED *= (1 / boost_speed)
-	queue_free()
-	
-func get_damage():
-	return damage
-
-func crashed():
-	pass
 
 func _on_timer_timeout():
 	if !reset:
@@ -52,3 +55,20 @@ func _on_timer_timeout():
 	else:
 		add_child(collision_shape)
 	reset = !reset
+
+
+func _on_area_entered(area):
+	var object_name: String
+	if area.has_method("get_real_name"):
+		object_name = area.get_real_name()
+	else:
+		object_name = area.get_name()
+	if targets.has(object_name):
+		emit_signal("reached_target",self, area)
+
+
+func _on_execution_time_timeout():
+	is_active = false
+	ship.shoot_is_disabled = false
+	ship.speed *= (1 / boost_speed)
+	queue_free()

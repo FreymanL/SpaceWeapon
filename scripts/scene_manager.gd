@@ -1,9 +1,9 @@
 extends Node2D
 
-@onready var main_menu = load("res://scenes/main_menu.tscn")
+@onready var main_menu = load("res://scenes/menu_controls/main_menu.tscn")
 @onready var world1 = load("res://scenes/mundo.tscn")
 
-var current_scene
+var current_scene : Node
 var current_parameters = {}
 
 func _ready():
@@ -20,7 +20,8 @@ func _process(delta):
 func process_play_world(parameters):
 	var world = parameters["world"]
 	current_scene.queue_free()
-	var next_level = load("res://scenes/" + world + ".tscn").instantiate()
+	var next_level = load("res://scenes/worlds/" + world + ".tscn").instantiate()
+	await get_tree().create_timer(0.05).timeout #pantalla de carga
 	add_child(next_level)
 	next_level.set_parameters(parameters)
 	current_scene = next_level
