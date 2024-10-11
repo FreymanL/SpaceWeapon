@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://denu2i72bkppg"
+path="res://.godot/imported/switch-light-04-82204 (mp3cut.net).mp3-cadf8392925b2cdd26789e2a3fe36911.mp3str"
+
+[deps]
+
+source_file="res://audios/switch-light-04-82204 (mp3cut.net).mp3"
+dest_files=["res://.godot/imported/switch-light-04-82204 (mp3cut.net).mp3-cadf8392925b2cdd26789e2a3fe36911.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

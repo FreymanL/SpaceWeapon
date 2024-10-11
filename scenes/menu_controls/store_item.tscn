@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://62tmbrhtsicl"]
+[gd_scene load_steps=6 format=3 uid="uid://62tmbrhtsicl"]
 
 [ext_resource type="Script" path="res://scripts/store_item.gd" id="1_ftqmy"]
+[ext_resource type="Texture2D" uid="uid://8cir2pnfkvsj" path="res://images/backgrounds/item_store_bg.png" id="1_nriu1"]
 [ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="2_r7cnm"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_by0k2"]
@@ -20,6 +21,7 @@ offset_right = -1208.0
 offset_bottom = -649.0
 grow_horizontal = 2
 grow_vertical = 2
+texture_focused = ExtResource("1_nriu1")
 script = ExtResource("1_ftqmy")
 
 [node name="Name" type="Label" parent="."]
@@ -42,4 +44,5 @@ text = "2500"
 label_settings = SubResource("LabelSettings_ugabi")
 vertical_alignment = 1
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]

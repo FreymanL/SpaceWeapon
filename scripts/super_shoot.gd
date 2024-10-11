@@ -12,11 +12,7 @@ var is_active = false
 var ship
 var cooldown = 20
 
-var targets = {
-	"astropajo": true,
-	"cosmic_chimera": true,
-	"settler": true,
-}
+var targets = {}
 
 var damage_stats = {
 	"normal_damage": 40
@@ -31,9 +27,10 @@ func _ready():
 	duration = booster_manager.calculate_skill_duration(duration)
 	execution_time.start(duration)
 	interaction_manager.connect_with(self)
+	targets = Settings.get_key("enemies")
 	execute()
 
-func _process(delta):
+func _process(_delta):
 	if ship.is_destroying || ship.level_completed:
 		queue_free()
 	global_position.x = ship.global_position.x
@@ -43,7 +40,7 @@ func execute():
 	damage_stats["normal_damage"] = booster_manager.calculate_area_damage(damage_stats["normal_damage"])
 	audio.play()
 	is_active = true
-	ship.shoot_is_disabled = true
+	ship.shoot_is_disabled -= 1
 	sprite.play("growing")
 	await get_tree().create_timer(0.2).timeout
 	sprite.play("destroying")
@@ -68,5 +65,5 @@ func _on_area_entered(area):
 
 func _on_execution_time_timeout():
 	is_active = false
-	ship.shoot_is_disabled = false
+	ship.shoot_is_disabled += 1
 	queue_free()

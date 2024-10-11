@@ -16,15 +16,16 @@ var reward_process_factory = {
 	"gold": "process_gold_earned",
 }
 
-func _process(delta):
+func _process(_delta):
 	var enemies = get_tree().get_nodes_in_group("Enemy")
 	for enemy in enemies:
-		enemy.connect("enemy_has_destroyed", process_enemy_destroyed)
+		if !enemy.is_connected("enemy_has_destroyed", process_enemy_destroyed):
+			enemy.connect("enemy_has_destroyed", process_enemy_destroyed)
 
 
-func process_enemy_destroyed(name: String):
-	for key in rewards[name]:
-		call(reward_process_factory[key], rewards[name].gold)
+func process_enemy_destroyed(enemy_name: String):
+	for key in rewards[enemy_name]:
+		call(reward_process_factory[key], rewards[enemy_name].gold)
 	
 func process_gold_earned(gold_: int):
 	gold += gold_
@@ -36,7 +37,8 @@ func save_rewards():
 	
 func show_gold(gold_):
 	var delta_instance = delta.instantiate()
-	delta_instance.global_position = ship.global_position
+	if ship:
+		delta_instance.global_position = ship.global_position
 	world.add_child(delta_instance)
 	delta_instance.show_gold(gold_)
 	

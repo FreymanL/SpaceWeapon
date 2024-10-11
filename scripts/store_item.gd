@@ -10,6 +10,7 @@ var item_icon : CompressedTexture2D
 var item_cost: int
 var item_name: String
 var item_description: String
+var item_video_example: String
 
 signal item_selected(item: Control)
 
@@ -21,6 +22,7 @@ func update_item_info():
 	item_icon = load("res://images/abilities/"+item_id+"/icon.png")
 	item_name = item.name
 	item_description = item.description
+	item_video_example = item.video
 	UserData.load_data()
 	if item_id == "ability_point":
 		var num = UserData.user_data.ability_points
@@ -45,4 +47,9 @@ func process_item_bought(item: Control):
 
 
 func _on_pressed():
+	grab_focus()
+	emit_signal("item_selected", self)
+
+func _on_mouse_entered():
+	grab_focus()
 	emit_signal("item_selected", self)

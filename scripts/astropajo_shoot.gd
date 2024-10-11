@@ -7,7 +7,6 @@ var life_points_percentage_damage : int = 0
 @onready var sprite = $Sprite
 
 signal reached_target(shoot: Area2D, target: Area2D)
-@onready var booster_manager = get_tree().get_first_node_in_group("BoosterManager")
 @onready var interaction_manager = get_tree().get_first_node_in_group("InteractionManager")
 
 const targets = {
@@ -40,7 +39,6 @@ func _on_visible_on_screen_enabler_2d_screen_exited():
 
 func crashed():
 	is_crashing = true
-	PROCESS_MODE_DISABLED
 	sprite.play("crashed")
 	await get_tree().create_timer(0.6).timeout
 	destroy()

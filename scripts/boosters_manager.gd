@@ -48,6 +48,7 @@ func set_info():
 	drone_additional_life_percentage = skills_tree["drone_additional_life_percentage"]
 	drone_damage_reduced_percentage = skills_tree["drone_damage_reduced_percentage"]
 
+#funcionando
 func set_laser_damage(laser):
 	var stats = laser.damage_stats
 	if stats.has("normal_damage"):
@@ -60,50 +61,44 @@ func set_laser_damage(laser):
 	else:
 		stats["additional_life_points_percentage_damage"] = total_additional_life_points_percentage_damage
 
-
+#funcionando
 func calculate_ship_speed(speed: float):
 	return ceil(speed * additional_speed_percentage)
-
+#funcionando
 func calculate_damage_received(damage: float):
 	var real_damage: float = floor(max(damage - damage_received_reduction,0)*damage_received_reduction_percentage)
 	return real_damage
-	
+#funcionando
 func calculate_drone_damage(damage: float):
 	var real_damage: float = round(damage*additional_general_damage_percentage*drone_additional_damage_percentage)
 	return real_damage
-	
+#funcionando
 func calculate_drone_life_points(life_points: float):
 	return round(life_points * drone_additional_life_percentage)
 
+#funcionando
 func calculate_drone_damage_received(damage: float):
 	return round(damage*drone_damage_reduced_percentage)
-
+#funcionando
 func calculate_ship_life_points(life_points):
 	var max_life_points : float = round((life_points + additional_life_points)*additional_life_points_percentage)
 	return max_life_points
 
-func calculate_ship_laser_damage(damage):
-	var real_damage: float = round((ship.LASER_DAMAGE + additional_laser_damage)*additional_general_damage_percentage)
-	return real_damage
-	
+#funcionando
 func calculate_area_damage(damage):
 	var real_damage: float = round(damage * additional_general_damage_percentage * additional_area_damage_percentage)
 	return real_damage
-
+#funcionando
 func calculate_ship_attack_speed(speed):
 	var real_speed : float = speed * additional_attack_speed_percentage
 	return real_speed
-
-func calculate_ship_life_percentage_damage(life_damage_percentage):
-	var real_damage_percentage : float  = life_damage_percentage + additional_life_points_percentage_damage
-	return real_damage_percentage
-
+#funcionando
 func calculate_ship_health(health: float):
 	return round(health*additional_healing_percentage)
-
+#funcionando
 func calculate_skill_cooldown(cooldown: float):
 	return round(cooldown*ability_cooldown_reduction_percentage)
-
+#funcionando
 func calculate_skill_duration(duration: float):
 	return duration*additional_ability_duration_percentage
 	

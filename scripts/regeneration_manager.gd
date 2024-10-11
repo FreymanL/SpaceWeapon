@@ -13,11 +13,6 @@ var damage_stats = {
 func _ready():
 	interaction_manager.connect_with(self)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func _on_timer_timeout():
 	var regeneration_percentage = booster_manager.missing_life_regeneration_percentage
 	if regeneration_percentage == 0:

@@ -1,0 +1,61 @@
+[gd_scene load_steps=12 format=3 uid="uid://2xsfyklfm5oc"]
+
+[ext_resource type="Script" path="res://scripts/world_5.gd" id="1_kuqad"]
+[ext_resource type="Texture2D" uid="uid://cqp2k3kmy0d0" path="res://images/backgrounds/world_5_bg.png" id="2_gl28l"]
+[ext_resource type="PackedScene" uid="uid://i4misnd337pc" path="res://scenes/ships/ship.tscn" id="3_6j0ma"]
+[ext_resource type="PackedScene" uid="uid://rxqnfqeqvu7g" path="res://scenes/in_game_items/interaction_manager.tscn" id="4_3m8lr"]
+[ext_resource type="PackedScene" uid="uid://drhmh4j1pappx" path="res://scenes/in_game_items/boosters_manager.tscn" id="5_5fa1q"]
+[ext_resource type="PackedScene" uid="uid://df60qnjmhwiiv" path="res://scenes/in_game_items/life_steal_manager.tscn" id="6_dr02o"]
+[ext_resource type="PackedScene" uid="uid://dx6i6ol78mnea" path="res://scenes/in_game_items/regeneration_manager.tscn" id="7_w55m4"]
+[ext_resource type="PackedScene" uid="uid://dn5vw6nrt546h" path="res://scenes/gold_manager.tscn" id="8_ghqak"]
+[ext_resource type="AudioStream" uid="uid://3p8k04jbuscq" path="res://audios/drama-stringsmp3-14627.mp3" id="9_iqdp0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7imap"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ktjw3"]
+bg_color = Color(0.160784, 0.0823529, 0.854902, 1)
+
+[node name="World5" type="Node2D" groups=["Mundo"]]
+script = ExtResource("1_kuqad")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(642, -775)
+texture = ExtResource("2_gl28l")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="Ship" parent="." instance=ExtResource("3_6j0ma")]
+position = Vector2(621, 626)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_right = 1280.0
+offset_bottom = 27.0
+scale = Vector2(1, 0.56)
+theme_override_styles/background = SubResource("StyleBoxFlat_7imap")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ktjw3")
+show_percentage = false
+
+[node name="InteractionManager" parent="." instance=ExtResource("4_3m8lr")]
+
+[node name="BoostersManager" parent="." instance=ExtResource("5_5fa1q")]
+
+[node name="LifeStealManager" parent="." instance=ExtResource("6_dr02o")]
+
+[node name="RegenerationManager" parent="." instance=ExtResource("7_w55m4")]
+
+[node name="AbilityIconsContainer" type="BoxContainer" parent="."]
+offset_left = 72.0
+offset_top = 598.0
+offset_right = 112.0
+offset_bottom = 638.0
+
+[node name="GoldManager" parent="." instance=ExtResource("8_ghqak")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_iqdp0")
+autoplay = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -16,7 +16,7 @@ extends Node2D
 signal level_has_completed
 signal game_over
 
-const TARGET_DESTROYED_ENEMIES = 28
+const TARGET_DESTROYED_ENEMIES = 36
 var destroyed_enemies = 0
 
 var start = false
@@ -37,6 +37,7 @@ var waves = {
 	5: "process_wave_5",
 	6: "process_wave_6",
 	7: "process_wave_7",
+	8: "process_wave_8",
 }
 
 var current_wave: int = 0
@@ -65,6 +66,8 @@ func set_parameters(params):
 
 func _on_timer_timeout():
 	background.global_translate(Vector2(0,1))
+	if background.global_position.y >= 1500:
+		background.global_position.y = -775
 
 func process_next_wave():
 	if current_wave == len(waves):
@@ -81,28 +84,47 @@ func process_wave_1():
 
 func process_wave_2():
 	var num_astropajos: int = 2
-	spawn_astropajo(num_astropajos)
+	for i in num_astropajos:
+		spawn_astropajo(1)
+		await get_tree().create_timer(0.2).timeout
 
 func process_wave_3():
 	var num_astropajos: int = 3
-	spawn_astropajo(num_astropajos)
+	for i in num_astropajos:
+		spawn_astropajo(1)
+		await get_tree().create_timer(0.2).timeout
 	
 func process_wave_4():
 	var num_astropajos: int = 4
-	spawn_astropajo(num_astropajos)
+	for i in num_astropajos:
+		spawn_astropajo(1)
+		await get_tree().create_timer(0.2).timeout
 
 func process_wave_5():
 	var num_astropajos: int = 5
-	spawn_astropajo(num_astropajos)
+	for i in num_astropajos:
+		spawn_astropajo(1)
+		await get_tree().create_timer(0.2).timeout
 
 func process_wave_6():
 	var num_astropajos: int = 6
-	spawn_astropajo(num_astropajos)
+	for i in num_astropajos:
+		spawn_astropajo(1)
+		await get_tree().create_timer(0.2).timeout
 	
 func process_wave_7():
 	var num_astropajos: int = 7
-	spawn_astropajo(num_astropajos)
+	for i in num_astropajos:
+		spawn_astropajo(1)
+		await get_tree().create_timer(0.2).timeout
+		
+func process_wave_8():
+	var num_astropajos: int = 8
+	for i in num_astropajos:
+		spawn_astropajo(1)
+		await get_tree().create_timer(0.2).timeout
 
+		
 func spawn_astropajo(num: int):
 	for i in num:
 		var spawned = astropajo_enemy.instantiate()
@@ -114,7 +136,7 @@ func spawn_astropajo(num: int):
 		spawned.connect("enemy_has_destroyed", process_enemy_destroyed)
 		num_active_enemies += 1
 	
-func process_enemy_destroyed(name: String):
+func process_enemy_destroyed(_name: String):
 	destroyed_enemies += 1
 	num_active_enemies -= 1
 	check_progress()

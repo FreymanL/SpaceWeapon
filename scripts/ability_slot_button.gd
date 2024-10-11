@@ -1,5 +1,6 @@
 extends TextureButton
 
+@onready var pressed_audio = $BtnPressedAudio
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -8,10 +9,6 @@ func _ready():
 var num : int
 signal button_has_pressed(num: int)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _on_pressed():
+	pressed_audio.play()
 	emit_signal("button_has_pressed", num)

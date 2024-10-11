@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvqjrgpb8jt7"]
+[gd_scene load_steps=8 format=3 uid="uid://bvqjrgpb8jt7"]
 
 [ext_resource type="Script" path="res://scripts/select_abilities_menu.gd" id="1_pmdim"]
+[ext_resource type="AudioStream" uid="uid://ch0sj5rv53ajp" path="res://audios/ui-click-43196 (mp3cut.net).mp3" id="3_1m026"]
 [ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="3_6c8bb"]
+[ext_resource type="AudioStream" uid="uid://denu2i72bkppg" path="res://audios/switch-light-04-82204 (mp3cut.net).mp3" id="4_12eye"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i8brq"]
 font = ExtResource("3_6c8bb")
@@ -94,6 +96,13 @@ offset_top = 587.0
 offset_right = 426.0
 offset_bottom = 631.0
 label_settings = SubResource("LabelSettings_vd2xc")
+
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_1m026")
+
+[node name="BtnLockedAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_12eye")
+volume_db = 15.0
 
 [connection signal="pressed" from="PositionReference/Background/ButtonContainer/Go" to="." method="_on_go_pressed"]
 [connection signal="pressed" from="PositionReference/BackContainer/Back" to="." method="_on_back_pressed"]

@@ -11,7 +11,7 @@ signal reached_target(shoot: Area2D, target: Area2D)
 var ship
 var cooldown = 40
 var duration = 10.0
-
+var speed = 0
 var damage_stats = {
 	"normal_health": 100
 }
@@ -25,7 +25,7 @@ func _ready():
 	ship.collision_shape.disabled = true
 	
 
-func _process(delta):
+func _process(_delta):
 	if ship.is_destroying || ship.level_completed:
 		queue_free()
 	global_position = ship.global_position

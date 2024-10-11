@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgvwh538xi2ey"]
+[gd_scene load_steps=6 format=3 uid="uid://bgvwh538xi2ey"]
 
 [ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="1_gm844"]
 [ext_resource type="Script" path="res://scripts/select_level.gd" id="1_jkbgl"]
+[ext_resource type="AudioStream" uid="uid://ch0sj5rv53ajp" path="res://audios/ui-click-43196 (mp3cut.net).mp3" id="3_h31rh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_q5n8a"]
 font = ExtResource("1_gm844")
@@ -55,5 +56,8 @@ theme = SubResource("Theme_ya0j6")
 layout_mode = 2
 text = "Back
 "
+
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_h31rh")
 
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

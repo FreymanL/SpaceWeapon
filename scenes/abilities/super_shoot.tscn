@@ -69,8 +69,8 @@ position = Vector2(1.00063, -542.072)
 rotation = -3.14159
 scale = Vector2(1, 1.54183)
 sprite_frames = SubResource("SpriteFrames_vmeev")
-animation = &"destroying"
-frame_progress = 0.808313
+animation = &"growing"
+frame_progress = 0.661333
 
 [node name="Reset" type="Timer" parent="."]
 wait_time = 0.05

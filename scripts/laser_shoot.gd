@@ -40,7 +40,7 @@ func _on_visible_on_screen_enabler_2d_screen_exited():
 
 func crashed():
 	is_crashing = true
-	collision_shape.disabled
+	collision_shape.queue_free()
 	scale.x = 0.1
 	scale.y = 0.1
 	sprite.play("crashed")

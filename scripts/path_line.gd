@@ -14,7 +14,6 @@ func _draw():
 func connect_nodes(from_node_ : Vector2, to_node_: Vector2):
 	from_node = from_node_
 	to_node = to_node_
-	_draw()
 
 func active_path():
 	current_path_color = path_color_active

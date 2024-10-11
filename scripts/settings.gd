@@ -25,6 +25,11 @@ var settings = {
 			"name": "TACTICS",
 			"num_abilities": 2,
 		},
+		"world_5": {
+			"num": 5,
+			"name": "NO ERRORS",
+			"num_abilities": 3,
+		},
 	},
 	"ability_tree": {
 		"base": {
@@ -553,12 +558,22 @@ var settings = {
 		},
 		"settler": {
 			"gold": 100,
+		},
+		"fore_front": {
+			"gold": 50,
+		},
+		"insect": {
+			"gold": 2,
+		},
+		"snow_cruise": {
+			"gold": 35,
 		}
 	},
 	"items": {
 		"ability_point": {
 			"name": "Ability point",
 			"description": "Additional skill point that you can assign in your skill tree.",
+			"video": "ability_example",
 			"cost":
 				[
 				1000,
@@ -602,26 +617,31 @@ var settings = {
 			"name": "Super Shoot",
 			"description": "Launches a lightning bolt that continuously inflicts area damage to your enemies.",
 			"cost": 100,
+			"video": "super_shoot_example",
 		},
 		"shield": {
 			"name": "Shield",
 			"description": "Generates a shield that protects you from damage and at the end heals a percentage of the absorbed damage.",
-			"cost": 5000,
+			"cost": 1000,
+			"video": "shield_example",
 		},
 		"attack_drone": {
 			"name": "Attack Drone",
 			"description": "Generates a drone that helps you destroy enemies.",
-			"cost": 10000,
+			"cost": 2000,
+			"video": "attack_drone_example",
 		},
 		"energy_burst": {
 			"name": "Energy Burst",
 			"description": "Generates an energy field around your ship that increases your speed and inflicts area damage to nearby enemies.",
-			"cost": 15000,
+			"cost": 3000,
+			"video": "energy_burst_example",
 		},
 		"doble_shoot": {
 			"name": "Double Shoot",
 			"description": "Power up your lasers by launching double shots with increased damage and speed.",
-			"cost": 20000,
+			"cost": 8000,
+			"video": "double_shoot_example",
 		},
 	}
 }

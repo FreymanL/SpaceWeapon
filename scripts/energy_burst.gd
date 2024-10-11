@@ -8,11 +8,7 @@ extends Area2D
 @onready var interaction_manager = get_tree().get_first_node_in_group("InteractionManager")
 @onready var execution_time = $ExecutionTime
 
-var targets = {
-	"astropajo": true,
-	"cosmic_chimera": true,
-	"settler": true,
-}
+var targets = {}
 
 var damage_stats = {
 	"normal_damage": 60
@@ -33,9 +29,10 @@ func _ready():
 	interaction_manager.connect_with(self)
 	sprite.play("default")
 	ship.speed *= boost_speed
+	targets = Settings.get_key("enemies")
 	execute()
 
-func _process(delta):
+func _process(_delta):
 	if ship.is_destroying || ship.level_completed:
 		queue_free()
 	global_position = ship.global_position
@@ -44,10 +41,8 @@ func execute():
 	audio.play()
 	damage_stats["normal_damage"] = booster_manager.calculate_area_damage(damage_stats["normal_damage"])
 	is_active = true
-	ship.shoot_is_disabled = true
-	sprite.play("growing")
+	ship.shoot_is_disabled -= 1
 	await get_tree().create_timer(0.2).timeout
-	sprite.play("destroying")
 
 func _on_timer_timeout():
 	if !reset:
@@ -69,6 +64,6 @@ func _on_area_entered(area):
 
 func _on_execution_time_timeout():
 	is_active = false
-	ship.shoot_is_disabled = false
+	ship.shoot_is_disabled += 1
 	ship.speed *= (1 / boost_speed)
 	queue_free()

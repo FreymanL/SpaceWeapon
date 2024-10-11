@@ -5,7 +5,7 @@ var level_completed = false
 @onready var delta = load("res://scenes/in_game_items/delta.tscn")
 @onready var world = get_tree().get_first_node_in_group("Mundo").connect("level_has_completed", set_level_completed)
 
-signal damage_has_been_done(source: Area2D, target: Area2D, damage: float)
+signal damage_has_been_done(source: Node2D, target: Node2D, damage: float)
 
 var health_process_factory: Dictionary = {
 	"normal_health": "calculate_normal_health",
@@ -14,6 +14,10 @@ var health_process_factory: Dictionary = {
 var damage_process_factory: Dictionary = {
 	"normal_damage": "calculate_normal_damage",
 	"additional_life_points_percentage_damage": "calculate_additional_life_points_percentage_damage",
+}
+
+var debuff_process_factory: Dictionary = {
+	"slow_down": "process_slow_down",
 }
 
 func connect_with(agent: Node2D):
@@ -33,7 +37,8 @@ func process_interaction_event(source: Node2D, target: Area2D):
 			total_damage += call(damage_process_factory[stat_type], stats[stat_type],source, target)
 		if health_process_factory.has(stat_type):
 			total_health += call(health_process_factory[stat_type], stats[stat_type],source, target)
-			
+		if debuff_process_factory.has(stat_type):
+			call(debuff_process_factory[stat_type], stats[stat_type],source, target)
 	process_normal_damage(total_damage, source, target)
 	process_normal_health(total_health, source, target)
 
@@ -41,10 +46,11 @@ func process_normal_damage(damage: float, source: Node2D ,target: Node2D):
 	if damage == 0:
 		return
 	var real_damage = target.normal_damage_received(damage)
-	emit_signal("damage_has_been_done",source, target, real_damage)
+	if real_damage && real_damage > 0.0:
+		emit_signal("damage_has_been_done",source, target, real_damage)
 	show_damage(real_damage, target)
 
-func process_normal_health(health: float, source: Node2D, target: Node2D):
+func process_normal_health(health: float, _source: Node2D, target: Node2D):
 	if health == 0:
 		return
 	var real_health = target.normal_health_received(health)
@@ -54,16 +60,22 @@ func process_normal_health(health: float, source: Node2D, target: Node2D):
 
 	
 
-func calculate_additional_life_points_percentage_damage(percentage: float, source: Node2D, target: Node2D):
+func calculate_additional_life_points_percentage_damage(percentage: float, _source: Node2D, target: Node2D):
 	var life_points: float = target.max_life_points
 	var real_damage: float = life_points*percentage
 	return real_damage
 
-func calculate_normal_damage(damage: float, source: Node2D, target: Node2D):
+func calculate_normal_damage(damage: float, _source: Node2D, _target: Node2D):
 	return damage
 	
-func calculate_normal_health(health: float, source: Node2D, target: Node2D):
+func calculate_normal_health(health: float, _source: Node2D, _target: Node2D):
 	return health
+	
+func process_slow_down(slow_down: Dictionary, _source: Node2D, target: Node2D):
+	target.speed *= slow_down.percentage
+	await get_tree().create_timer(slow_down.time).timeout
+	if target != null:
+		target.speed *= 1.0/slow_down.percentage
 
 func set_level_completed():
 	level_completed = true

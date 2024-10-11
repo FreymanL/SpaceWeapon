@@ -3,15 +3,13 @@ extends Node
 const file_path = "user://SAVEFILE.save"
 
 var user_data: Dictionary = {
-	"gold": 20000,
+	"gold": 100,
 	"ability_points": 0,
 	"abilities": {
-		"super_shoot": true,
 	},
 	"current_level": 1,
-	
 }
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	load_data()
 

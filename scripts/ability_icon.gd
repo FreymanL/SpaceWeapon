@@ -1,5 +1,6 @@
 extends TextureProgressBar
 
+
 var ship
 
 var world
@@ -13,13 +14,12 @@ func _ready():
 	
 func connect_ability(num):
 	ability_handler = get_tree().get_first_node_in_group("Ability"+str(num))
-	var test = get_tree().get_nodes_in_group("Ability"+str(num))
 	texture_progress = ability_handler.icon
 	max_value = ability_handler.max_cooldown
 	ability_ready = true
 
 
-func _process(delta):
+func _process(_delta):
 	if !ability_ready:
 		return
 	if ship.is_destroying:

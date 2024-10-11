@@ -14,7 +14,7 @@ extends Area2D
 @onready var destiny2 = $Destiny2
 @onready var destiny3 = $Destiny3
 
-var speed = 1.0
+var speed = 125.0
 var max_life_points = 10000
 var life_points: float = 10000
 var moving = false
@@ -34,12 +34,12 @@ func _ready():
 	ship = get_tree().get_first_node_in_group("Ship")
 	ship.connect("ship_has_destroyed", process_ship_has_destroyed)
 	world = get_tree().get_first_node_in_group("Mundo")
-	world.connect("level_has_completed", await destroy)
+	world.connect("level_has_completed", destroy)
 	
 
-func go_to_position():
+func go_to_position(delta):
 	if (global_position.y < 100):
-		global_position.y += speed
+		global_position.y += speed * delta
 	else:
 		in_position = true
 
@@ -71,14 +71,14 @@ func get_real_name():
 	return "settler"
 
 func _process(delta):
-	go_to_position()
-	move()
+	go_to_position(delta)
+	move(delta)
 
-func move():
+func move(delta):
 	if direction == 1:
-		global_position.x += speed
+		global_position.x += speed * delta
 	elif direction == 0:
-		global_position.x -= speed;
+		global_position.x -= speed * delta
 
 func _on_shoot_timer_timeout():
 	if is_ship_destroyed:

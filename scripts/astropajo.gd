@@ -7,7 +7,7 @@ extends Area2D
 @onready var action_shape = $ActionShape
 @onready var interaction_manager: Node2D = get_tree().get_first_node_in_group("InteractionManager")
 
-var speed = 2.0
+var speed = 250.0
 var max_life_points = 400
 var life_points: float = 400
 var moving = false
@@ -16,10 +16,12 @@ var in_position = false
 var ship
 var is_ship_destroyed = false
 var direction
-
+var rng = RandomNumberGenerator.new()
+var t = 0.0
 signal enemy_has_destroyed(enemy_name: String)
 
 func _ready():
+	t = rng.randf_range(0.0,1.0)
 	life_bar.set_max_life_points(max_life_points)
 	life_points = max_life_points
 	sprite.play("default")
@@ -28,29 +30,39 @@ func _ready():
 		ship.connect("ship_has_destroyed", process_ship_has_destroyed)
 	var mundo_group = get_tree().get_nodes_in_group("Mundo")
 	for node in mundo_group:
-		node.connect("level_has_completed", await destroy)
+		node.connect("level_has_completed", destroy)
 
 func _process(delta):
 	if is_ship_destroyed:
 		return
-	go_to_position()
-	move()
+	go_to_position(delta)
+	move(delta)
+	hover(delta)
+	
+
+func hover(delta):
+	if !in_position:
+		return
+	t += 0.025
+	global_position.y += ((speed*3/5)*cos(t)*delta)
 
 func process_ship_has_destroyed():
 	is_ship_destroyed = true
 
-func go_to_position():
-	if (global_position.y < 100):
-		global_position.y += speed
+func go_to_position(delta):
+	if in_position:
+		return
+	if (global_position.y < 300):
+		global_position.y += (speed * delta)
 	else:
 		in_position = true
 
-func move():
+func move(delta):
 	if moving == true:
 		if direction == 1:
-			global_position.x += speed
+			global_position.x += (speed * delta)
 		elif direction == 0:
-			global_position.x -= speed;
+			global_position.x -= (speed * delta)
 		return
 	moving = true
 	direction = -1
@@ -59,7 +71,6 @@ func move():
 	if position.x > 980:
 		direction = 0
 	if direction == -1:
-		var rng = RandomNumberGenerator.new()
 		direction = rng.randi_range(0,1)
 	await get_tree().create_timer(1).timeout
 	moving = false
@@ -79,9 +90,9 @@ func destroy():
 	queue_free()
 
 
-func normal_damage_received(damage_: int):
+func normal_damage_received(damage_: float):
 	if is_destroying:
-		return
+		return 0
 	life_points -= damage_
 	life_bar.set_current_life_points(life_points)
 	if life_points <= 0:
@@ -92,12 +103,13 @@ func normal_damage_received(damage_: int):
 func _on_shoot_timer_timeout():
 	if in_position == false || is_destroying || is_ship_destroyed:
 		return
+	var wait = rng.randf_range(0,0.5)
+	await get_tree().create_timer(wait).timeout
 	shoot_laser()
 	
 	
 func shoot_laser():
 	var laser_shoot = astropajo_shoot.instantiate()
-	var rng = RandomNumberGenerator.new()
 	var number = rng.randi_range(0,1000)
 	laser_shoot.name =  laser_shoot.name + str(number)
 	laser_shoot.global_position = $Shoot/Direction.global_position

@@ -8,9 +8,8 @@ extends Area2D
 var speed : int = 600
 var is_crashing = false
 var life_points_percentage_damage : int = 0
-var ship
+var target : Vector2
 var dir : Vector2
-var target: Vector2
 
 signal reached_target(shoot: Area2D, target: Area2D)
 
@@ -21,7 +20,7 @@ const targets = {
 	}
 
 const damage_stats = {
-	"normal_damage": 300,
+	"normal_damage": 200,
 }
 
 func _ready():
@@ -29,16 +28,15 @@ func _ready():
 	sprite.play("shoot")
 	var world = get_tree().get_first_node_in_group("Mundo")
 	world.connect("level_has_completed", queue_free)
-	ship = get_tree().get_first_node_in_group("Ship")
-	look_at(target)
-	dir = global_position.direction_to(target)
 	action_shape.disabled = true
+	dir = global_position.direction_to(target)
+	look_at(target)
 
 func _process(delta):
 	if is_crashing:
 		return
-	global_position += dir * speed * delta
-	if global_position.distance_to(target) <= 10:
+	global_position += speed * delta * dir
+	if !target || global_position.y > target.y:
 		crashed()
 
 func _on_visible_on_screen_enabler_2d_screen_exited():
@@ -47,15 +45,17 @@ func _on_visible_on_screen_enabler_2d_screen_exited():
 func crashed():
 	is_crashing = true
 	active_area()
-	sprite.scale = Vector2(0.5,0.5)
+	modulate = Color("ffffff45")
 	sprite.play("crashed")
-	await get_tree().create_timer(0.5).timeout
+	for i in 4:
+		sprite.scale += Vector2(0.25,0.25)
+		await get_tree().create_timer(0.05).timeout
 	queue_free()
 
 func active_area():
-	action_shape.disabled = false
+	action_shape.set_deferred("disabled",false)
 	await get_tree().create_timer(0.2).timeout
-	action_shape.disabled = true
+	action_shape.set_deferred("disabled",true)
 
 func _on_area_entered(area):
 	var object_name: String

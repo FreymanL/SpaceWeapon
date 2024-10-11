@@ -6,10 +6,11 @@ extends Area2D
 @onready var life_bar = $LifePointsBar
 @onready var action_shape = $ActionShape
 @onready var interaction_manager: Node2D = get_tree().get_first_node_in_group("InteractionManager")
+@onready var world = get_tree().get_first_node_in_group("Mundo")
 
 var max_life_points = 800
 var life_points = 800
-var speed = 1
+var speed = 200
 var is_destroying = false
 var is_shooting = false
 var is_in_position = false
@@ -20,6 +21,7 @@ var damage = 10
 var is_ship_destroyed = false
 var rng = RandomNumberGenerator.new()
 var direction
+var can_switch = true
 signal enemy_has_destroyed(name: String)
 
 # Called when the node enters the scene tree for the first time.
@@ -29,9 +31,8 @@ func _ready():
 	ship.connect("ship_has_destroyed", process_ship_destroyed)
 	var mundo_group = get_tree().get_nodes_in_group("Mundo")
 	for node in mundo_group:
-		node.connect("level_has_completed", await destroy)
+		node.connect("level_has_completed", destroy)
 	sprite.play("default")
-	var rng = RandomNumberGenerator.new()
 	corner = rng.randi_range(0,1)
 	
 
@@ -39,39 +40,39 @@ func _ready():
 func _process(delta):
 	if is_destroying || is_ship_destroyed:
 		return
-	go_to_position()
-	move()
+	go_to_position(delta)
+	move(delta)
 
 
 func process_ship_destroyed():
 	is_ship_destroyed = true
 
-func go_to_position():
+func go_to_position(delta):
 	if corner == 0:
-		go_to_left()
+		go_to_left(delta)
 	else:
-		go_to_right()
+		go_to_right(delta)
 
-func go_to_left():
+func go_to_left(delta):
 	if global_position.x < 130:
 		is_in_position = true
 	else:
 		var dir = Vector2(-2,1)
-		global_position += dir * speed
+		global_position += dir * speed * delta
 
-func go_to_right():
+func go_to_right(delta):
 	if global_position.x > 1150:
 		is_in_position = true
 	else:
 		var dir = Vector2(2,1)
-		global_position += dir * speed
+		global_position += dir * speed * delta
 
-func move():
+func move(delta):
 	if is_moving == true:
 		if direction == 1:
-			global_position.y += speed
+			global_position.y += speed * delta
 		elif direction == 0:
-			global_position.y  -=speed;
+			global_position.y -= speed * delta;
 		return
 	is_moving = true
 	direction = -1
@@ -81,11 +82,13 @@ func move():
 		direction = 0
 	if direction == -1:
 		direction = rng.randi_range(0,1)
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.5).timeout
 	is_moving = false
 
 
 func destroy():
+	if is_destroying:
+		return
 	is_destroying = true
 	action_shape.queue_free()
 	sprite.play("crashed")
@@ -99,11 +102,8 @@ func _on_shoot_timer_timeout():
 	if is_ship_destroyed || !is_in_position:
 		return
 	var shoot_instance = cosmis_chimera_shoot.instantiate()
-	var num = rng.randi_range(0,1000)
-	shoot_instance.name += str(num)
 	shoot_instance.global_position = $Shoot/Direction.global_position
-	get_tree().call_group("Mundo", "add_child", shoot_instance)
-	interaction_manager.connect_with(shoot_instance)
+	world.add_child(shoot_instance)
 
 func _on_set_direction_timer_timeout():
 	if is_ship_destroyed:
@@ -122,4 +122,12 @@ func normal_damage_received(damage_: int):
 	life_bar.set_current_life_points(life_points)
 	if life_points <= 0:
 		destroy()
+	elif can_switch:
+		switch_corner()
 	return damage_
+	
+func switch_corner():
+	corner = (corner^1)
+	can_switch = false
+	is_in_position = false
+	

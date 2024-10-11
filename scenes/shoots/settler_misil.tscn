@@ -68,10 +68,11 @@ script = ExtResource("1_pm5bk")
 [node name="ActionArea" type="CollisionShape2D" parent="."]
 position = Vector2(-1.5, 0.5)
 shape = SubResource("CircleShape2D_f73j0")
+debug_color = Color(0.901961, 0.117647, 0.698039, 0.419608)
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6jqoa")
 animation = &"crashed"
-frame_progress = 0.360748
+frame_progress = 0.479258
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

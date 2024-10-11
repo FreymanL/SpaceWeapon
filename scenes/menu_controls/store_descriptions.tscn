@@ -11,16 +11,16 @@ font_size = 12
 script = ExtResource("1_0o1af")
 
 [node name="Background" type="ColorRect" parent="."]
-offset_right = 317.0
-offset_bottom = 466.0
-color = Color(0, 0, 0, 0.313726)
+offset_right = 320.0
+offset_bottom = 480.0
+color = Color(0, 0, 0, 0.662745)
 
 [node name="Text" type="Label" parent="Background"]
 layout_mode = 0
-offset_left = 13.0
-offset_top = 11.0
-offset_right = 304.0
-offset_bottom = 449.0
+offset_left = 10.0
+offset_top = 5.0
+offset_right = 310.0
+offset_bottom = 475.0
 label_settings = SubResource("LabelSettings_klgfd")
 autowrap_mode = 3
 visible_characters = 0

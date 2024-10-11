@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://p5ql03snvd7j"]
+[gd_scene load_steps=12 format=3 uid="uid://p5ql03snvd7j"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_x6uos"]
 [ext_resource type="Texture2D" uid="uid://dokk6tfv4lft5" path="res://images/backgrounds/bgmenu.png" id="2_l32du"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bvqjrgpb8jt7" path="res://scenes/menu_controls/select_abilities_menu.tscn" id="7_ahu4q"]
 [ext_resource type="PackedScene" uid="uid://8ppiun8fwo6m" path="res://scenes/menu_controls/passive_skills_tree.tscn" id="7_efpd1"]
 [ext_resource type="PackedScene" uid="uid://bhrl2dev3d7qx" path="res://scenes/menu_controls/upgrades_menu.tscn" id="8_65v8e"]
+[ext_resource type="AudioStream" uid="uid://ch0sj5rv53ajp" path="res://audios/ui-click-43196 (mp3cut.net).mp3" id="9_dcoy0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u1gkb"]
 font = ExtResource("3_f68te")
@@ -77,6 +78,9 @@ layout_mode = 1
 [node name="UpgradesMenu" parent="." instance=ExtResource("8_65v8e")]
 visible = false
 layout_mode = 1
+
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_dcoy0")
 
 [connection signal="pressed" from="ButtonContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="ButtonContainer/Upgrades" to="." method="_on_upgrades_pressed"]

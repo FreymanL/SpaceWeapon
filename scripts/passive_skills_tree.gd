@@ -3,6 +3,9 @@ extends Control
 @onready var ability_points_lbl = $Background/SubTitleContainer
 @onready var warning_label = $WarningLabel
 @onready var path = $Path
+@onready var pressed_audio = $BtnPressedAudio
+@onready var locked_audio = $BtnLockedAudio
+
 var num_ability_points = 12
 var current_ability_points : int
 var passive_skills = {}
@@ -80,7 +83,9 @@ func update_points(item: Control):
 func process_try_upgrade_skill(skill_id: String, current_level: int):
 	if current_ability_points == 0:
 		warning_label.text = "you have no skill points left"
+		locked_audio.play()
 		return
+	pressed_audio.play()
 	current_ability_points -= 1;
 	update_ability_points_lbl()
 	emit_signal("skill_has_upgraded", skill_id, current_level + 1)
@@ -91,16 +96,25 @@ func update_ability_points_lbl():
 func _on_save_pressed():
 	if current_ability_points > 0:
 		warning_label.text = "you have pending points to be assigned"
+		locked_audio.play()
 		return
+	pressed_audio.play()
+	await pressed_audio.finished
+	
 	var skill_nodes = get_tree().get_nodes_in_group("PassiveSkillNode")
 	for node in skill_nodes:
 		node.save_statistics()
 	emit_signal("tree_has_setted", summary_skills)
 
 func _on_back_pressed():
+	pressed_audio.play()
 	emit_signal("ability_tree_select_canceled")
 
-func _on_texture_button_pressed():
+func _on_restart_tree_pressed():
+	pressed_audio.play()
+	restart()
+	
+func restart():
 	emit_signal("tree_has_reestarted")
 	current_ability_points = num_ability_points
 	update_ability_points_lbl()

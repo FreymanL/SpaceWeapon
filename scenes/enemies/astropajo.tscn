@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://btb6jn4ledrlm"]
+[gd_scene load_steps=20 format=3 uid="uid://btb6jn4ledrlm"]
 
 [ext_resource type="Script" path="res://scripts/astropajo.gd" id="1_3nuft"]
 [ext_resource type="Texture2D" uid="uid://c1vyuxkxqpxsb" path="res://craftpix-991101-free-pixel-art-enemy-spaceship-2d-sprites/PNG_Parts&Spriter_Animation/Ship2/Ship2.png" id="2_bgkg5"]
@@ -15,11 +15,15 @@
 [ext_resource type="AudioStream" uid="uid://dfpe12dset4bq" path="res://kenney_space-shooter-redux/Bonus/explosion-6055.mp3" id="13_b41pe"]
 [ext_resource type="Script" path="res://scripts/progress_bar.gd" id="14_y68kj"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvrhv"]
+atlas = ExtResource("2_bgkg5")
+region = Rect2(0, 0, 128, 128)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_ee76k"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_bgkg5")
+"texture": SubResource("AtlasTexture_bvrhv")
 }],
 "loop": true,
 "name": &"default",

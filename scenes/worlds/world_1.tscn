@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://4yr4hw8xvmr0"]
+[gd_scene load_steps=12 format=3 uid="uid://4yr4hw8xvmr0"]
 
 [ext_resource type="Script" path="res://scripts/world_1.gd" id="1_3bvxf"]
 [ext_resource type="Texture2D" uid="uid://bemt7vmk0yuvt" path="res://images/backgrounds/world_1_bg.png" id="2_eov5i"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://df60qnjmhwiiv" path="res://scenes/in_game_items/life_steal_manager.tscn" id="6_dgbib"]
 [ext_resource type="PackedScene" uid="uid://dx6i6ol78mnea" path="res://scenes/in_game_items/regeneration_manager.tscn" id="7_3imur"]
 [ext_resource type="PackedScene" uid="uid://dn5vw6nrt546h" path="res://scenes/gold_manager.tscn" id="8_xquyi"]
+[ext_resource type="AudioStream" uid="uid://cewe3qqe7srnx" path="res://audios/am5_intro-55571.mp3" id="9_n10ci"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mtxeg"]
 bg_color = Color(0, 0, 0, 1)
@@ -36,6 +37,7 @@ scale = Vector2(1, 0.56)
 theme_override_styles/background = SubResource("StyleBoxFlat_mtxeg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ufkjs")
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="InteractionManager" parent="." instance=ExtResource("4_h0how")]
 
@@ -50,7 +52,12 @@ offset_left = 72.0
 offset_top = 598.0
 offset_right = 112.0
 offset_bottom = 638.0
+metadata/_edit_use_anchors_ = true
 
 [node name="GoldManager" parent="." instance=ExtResource("8_xquyi")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_n10ci")
+autoplay = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,18 +1,17 @@
 extends Control
 
 @onready var abilities_container = $PositionReference/Background/AbilitiesContainer
-@onready var super_shoot_btn = $PositionReference/Background/AbilitiesContainer/SuperShootButton
-@onready var shield_btn = $PositionReference/Background/AbilitiesContainer/ShieldButton
-@onready var double_shoot_btn = $PositionReference/Background/AbilitiesContainer/DoubleShootButton
 @onready var warning_label = $PositionReference/WarningLabel
-@onready var attack_drone_btn = $PositionReference/Background/AbilitiesContainer/AttackDroneButton
-@onready var energy_burst_btn = $PositionReference/Background/AbilitiesContainer/EnergyBurstButton
 @onready var slots_container = $PositionReference/Background/SlotsContainer
 @onready var slot = load("res://scenes/menu_controls/ability_slot_button.tscn")
 @onready var ability_btn = load("res://scenes/menu_controls/ability_button.tscn")
 @onready var settings = load("res://scenes/settings.tscn").instantiate()
+@onready var pressed_audio = $BtnPressedAudio
+@onready var locked_audio = $BtnLockedAudio
+
 var slot_selected : TextureButton
-var abilities = {}
+var current_abilities_selected = {}
+var abilities_set = {}
 var num_abilities = 3
 var slots = {}
 var world_info
@@ -20,9 +19,18 @@ var available_abilities = {}
 
 signal abilities_selected(abilities)
 signal abilities_selected_canceled
-
-func _ready():
-	pass
+	
+func load_parameters(level: String):
+	current_abilities_selected.clear()
+	for current_slot in slots:
+		slots[current_slot].queue_free()
+	for current_abilities in available_abilities:
+		available_abilities[current_abilities].queue_free()
+	world_info = settings.get_key("worlds")[level]
+	num_abilities = world_info["num_abilities"]
+	slots.clear()
+	load_slots()
+	load_abilities()
 
 func load_slots():
 	for i in num_abilities:	
@@ -31,6 +39,9 @@ func load_slots():
 		slots_container.add_child(slot_instance)
 		slot_instance.connect("button_has_pressed", set_slot_selected)
 		slots[i] = slot_instance
+	abilities_set.clear()
+	set_next_free_slot()
+	
 
 func load_abilities():
 	UserData.load_data()
@@ -44,37 +55,46 @@ func load_abilities():
 
 func set_slot_selected(num: int):
 	slot_selected = slots[num]
-	
-func load_parameters(level: String):
-	for slot in slots:
-		slots[slot].queue_free()
-	for abilities in available_abilities:
-		available_abilities[abilities].queue_free()
-	world_info = settings.get_key("worlds")[level]
-	num_abilities = world_info["num_abilities"]
-	load_slots()
-	load_abilities()
-		
+	slot_selected.grab_focus()
 
 func process_ability_selected(ability: TextureButton):
 	if slot_selected == null:
+		locked_audio.play()
+		return
+	if abilities_set.has(ability.ability_id):
+		locked_audio.play()
 		return
 	slot_selected.texture_normal = ability.texture_normal
-	abilities[slot_selected.num] = ability.ability_id
+	current_abilities_selected[slot_selected.num] = ability.ability_id
+	refresh_abilities_set()
+	set_next_free_slot()
+	pressed_audio.play()
 
 func _on_go_pressed():
-	var abilities_selected = len(abilities)
-	if abilities_selected != num_abilities:
+	if len(current_abilities_selected) != num_abilities:
 		warning_label.text = "Select " + str(num_abilities) + " " + check_plural(num_abilities)
+		locked_audio.play()
 		return
-	emit_signal("abilities_selected", abilities)
+	pressed_audio.play()
+	emit_signal("abilities_selected", current_abilities_selected)
 	
-func check_plural(num_abilities):
-	if num_abilities == 1:
+func check_plural(num):
+	if num == 1:
 		return "ability"
 	return "abilities"
 	
 func _on_back_pressed():
+	pressed_audio.play()
 	emit_signal("abilities_selected_canceled")
+	
+func set_next_free_slot():
+	for i in num_abilities:
+		if !current_abilities_selected.has(i):
+			set_slot_selected(i)
+			return
 
+func refresh_abilities_set():
+	abilities_set.clear()
+	for ability_selected in current_abilities_selected:
+		abilities_set[current_abilities_selected[ability_selected]] = true
 

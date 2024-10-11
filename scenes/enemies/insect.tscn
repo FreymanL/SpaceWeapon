@@ -1,0 +1,111 @@
+[gd_scene load_steps=19 format=3 uid="uid://rb7s6q2aqxle"]
+
+[ext_resource type="Script" path="res://scripts/insect.gd" id="1_dq1np"]
+[ext_resource type="Texture2D" uid="uid://oegyrrlueqc4" path="res://images/enemies/insect/insect.png" id="2_iee8d"]
+[ext_resource type="AudioStream" uid="uid://dfpe12dset4bq" path="res://kenney_space-shooter-redux/Bonus/explosion-6055.mp3" id="2_k5q3i"]
+[ext_resource type="Script" path="res://scripts/progress_bar.gd" id="3_lmle2"]
+[ext_resource type="Texture2D" uid="uid://6j8ua70g5xmx" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_1.png" id="3_xllat"]
+[ext_resource type="Texture2D" uid="uid://decl4ys2s3sxa" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_2.png" id="4_xwa56"]
+[ext_resource type="Texture2D" uid="uid://cah61y6ogkchg" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_3.png" id="5_6q4ea"]
+[ext_resource type="Texture2D" uid="uid://iiwcr62dolo2" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_4.png" id="6_tv388"]
+[ext_resource type="Texture2D" uid="uid://8wv4rupcj0fg" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_5.png" id="7_c65ks"]
+[ext_resource type="Texture2D" uid="uid://cyhp2yqbroiru" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_6.png" id="8_op3xi"]
+[ext_resource type="Texture2D" uid="uid://1vg4vwajwby" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_7.png" id="9_i31ef"]
+[ext_resource type="Texture2D" uid="uid://1bt7nbbj6ci4" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_8.png" id="10_k8kqe"]
+[ext_resource type="Texture2D" uid="uid://dk2j11lbv70pe" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_9.png" id="11_jhcx4"]
+[ext_resource type="Texture2D" uid="uid://bu760tqka0lib" path="res://craftpix-net-840730-free-animated-explosion-sprite-pack/PNG/Explosion_1/Explosion_10.png" id="12_m0844"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sgibp"]
+size = Vector2(27, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s0t85"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_iee8d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_xllat")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xwa56")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6q4ea")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_tv388")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_c65ks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_op3xi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_i31ef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_k8kqe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_jhcx4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_m0844")
+}],
+"loop": true,
+"name": &"exploit",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ui30y"]
+bg_color = Color(0.6, 0.6, 0.6, 0.117647)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mytl7"]
+bg_color = Color(0.780392, 0.478431, 0.0745098, 1)
+
+[node name="Insect" type="Area2D" groups=["Enemy"]]
+script = ExtResource("1_dq1np")
+
+[node name="ActionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_sgibp")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0.561867, 0.18729)
+rotation = -1.57289
+scale = Vector2(0.252774, 0.263453)
+sprite_frames = SubResource("SpriteFrames_s0t85")
+frame_progress = 0.480861
+
+[node name="DestroyedAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_k5q3i")
+volume_db = -20.0
+
+[node name="LifePointsBar" type="ProgressBar" parent="."]
+offset_left = -25.0
+offset_top = 18.0
+offset_right = 25.0
+offset_bottom = 23.0
+theme_override_styles/background = SubResource("StyleBoxFlat_ui30y")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mytl7")
+value = 50.0
+show_percentage = false
+script = ExtResource("3_lmle2")
+
+[node name="RotateTimer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="RotateTimer" to="." method="_on_rotate_timer_timeout"]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

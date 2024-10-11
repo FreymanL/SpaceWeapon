@@ -1,7 +1,6 @@
 extends Area2D
 
 @onready var sprite = $Sprite
-@onready var booster_manager = get_tree().get_first_node_in_group("BoosterManager")
 @onready var interaction_manager = get_tree().get_first_node_in_group("InteractionManager")
 
 var speed : int = 600
@@ -20,11 +19,14 @@ const targets = {
 
 const damage_stats = {
 	"normal_damage": 100,
+	"slow_down": {
+		"time": 3.0,
+		"percentage": 0.3,
+	}
 }
 
 func _ready():
 	interaction_manager.connect_with(self)
-	sprite.play("shoot")
 	var world = get_tree().get_first_node_in_group("Mundo")
 	world.connect("level_has_completed", destroy)
 	ship = get_tree().get_first_node_in_group("Ship")
@@ -43,7 +45,6 @@ func _on_visible_on_screen_enabler_2d_screen_exited():
 
 func crashed():
 	is_crashing = true
-	PROCESS_MODE_DISABLED
 	scale = Vector2(0.25, 0.25)
 	sprite.play("crashed")
 	await get_tree().create_timer(0.6).timeout

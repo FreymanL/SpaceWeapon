@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var main_menu = load("res://scenes/menu_controls/main_menu.tscn")
-@onready var world1 = load("res://scenes/mundo.tscn")
 
 var current_scene : Node
 var current_parameters = {}
@@ -11,11 +10,13 @@ func _ready():
 	add_child(menu_instance)
 	current_scene = menu_instance
 
-func _process(delta):
+func _process(_delta):
 	var menu_nodes = get_tree().get_nodes_in_group("menu_actions")
 	for node in menu_nodes:
-		node.connect("go_home", process_go_home)
-		node.connect("play_world", process_play_world)
+		if node.has_signal("go_home") and !node.is_connected("go_home", process_go_home):
+			node.connect("go_home", process_go_home)
+		if node.has_signal("play_world") and !node.is_connected("play_world", process_play_world):
+			node.connect("play_world", process_play_world)
 
 func process_play_world(parameters):
 	var world = parameters["world"]

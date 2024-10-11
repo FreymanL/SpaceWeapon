@@ -6,9 +6,8 @@ var life_points_percentage_damage : int = 0
 var ship
 var dir : Vector2
 @onready var sprite = $Sprite
-@onready var booster_manager = get_tree().get_first_node_in_group("BoosterManager")
 @onready var interaction_manager = get_tree().get_first_node_in_group("InteractionManager")
-
+@onready var collision_shape = $ActionShape
 signal reached_target(shoot: Area2D, target: Area2D)
 
 
@@ -49,7 +48,7 @@ func _on_visible_on_screen_enabler_2d_screen_exited():
 
 func crashed():
 	is_crashing = true
-	PROCESS_MODE_DISABLED
+	collision_shape.queue_free()
 	scale = Vector2(0.25, 0.25)
 	sprite.play("crashed")
 	await get_tree().create_timer(0.6).timeout

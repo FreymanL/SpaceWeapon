@@ -5,7 +5,6 @@ extends TextureButton
 @onready var game_settings = load("res://scenes/settings.tscn").instantiate()
 @onready var level_lbl = $Level
 @onready var title = $Title
-@onready var description = $Description
 @onready var path_vertice = $PathVertice
 var description_dialog
 

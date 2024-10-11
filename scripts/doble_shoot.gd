@@ -24,7 +24,7 @@ func _ready():
 	world = get_tree().get_first_node_in_group("Mundo")
 	world.connect("level_has_completed", queue_free)
 	shoot = ship.shoot
-	ship.shoot_is_disabled = true
+	ship.shoot_is_disabled -= 1
 	_on_shoot_timeout()
 
 
@@ -51,5 +51,5 @@ func shoot_side(node : Node2D):
 
 
 func _on_execution_time_timeout():
-	ship.shoot_is_disabled = false
+	ship.shoot_is_disabled += 1
 	queue_free()

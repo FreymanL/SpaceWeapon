@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://8ppiun8fwo6m"]
+[gd_scene load_steps=12 format=3 uid="uid://8ppiun8fwo6m"]
 
 [ext_resource type="Script" path="res://scripts/passive_skills_tree.gd" id="1_maxty"]
 [ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="1_q65bt"]
@@ -6,18 +6,20 @@
 [ext_resource type="PackedScene" uid="uid://bst50ngb7jb8n" path="res://scenes/menu_controls/dialog.tscn" id="4_qvwfd"]
 [ext_resource type="PackedScene" uid="uid://brs3q5sh5naxg" path="res://scenes/menu_controls/path.tscn" id="5_c5ea8"]
 [ext_resource type="Texture2D" uid="uid://bmsknp2hy68ot" path="res://images/ability_tree/reestart.png" id="6_ckhjf"]
+[ext_resource type="AudioStream" uid="uid://ch0sj5rv53ajp" path="res://audios/ui-click-43196 (mp3cut.net).mp3" id="7_ajomw"]
+[ext_resource type="AudioStream" uid="uid://denu2i72bkppg" path="res://audios/switch-light-04-82204 (mp3cut.net).mp3" id="8_jsx8w"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0y34a"]
 font = ExtResource("1_q65bt")
-
-[sub_resource type="Theme" id="Theme_xugc8"]
-default_font = ExtResource("1_q65bt")
-default_font_size = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_4xve7"]
 font = ExtResource("1_q65bt")
 font_size = 14
 font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_xugc8"]
+default_font = ExtResource("1_q65bt")
+default_font_size = 8
 
 [node name="PassiveSkillsTree" type="Control" groups=["PassiveSkillsTree"]]
 layout_mode = 3
@@ -211,21 +213,7 @@ skill_id = "6d"
 [node name="Descriptions" parent="Background" instance=ExtResource("4_qvwfd")]
 position = Vector2(543, 5)
 
-[node name="BackContainer2" type="VBoxContainer" parent="Background"]
-layout_mode = 0
-offset_left = 969.0
-offset_top = 559.0
-offset_right = 1015.0
-offset_bottom = 576.0
-scale = Vector2(2.80891, 2.44851)
-theme = SubResource("Theme_xugc8")
-
-[node name="Save" type="Button" parent="Background/BackContainer2"]
-layout_mode = 2
-text = "Save
-"
-
-[node name="TextureButton" type="TextureButton" parent="Background"]
+[node name="restart_tree" type="TextureButton" parent="Background"]
 layout_mode = 0
 offset_left = 1021.0
 offset_top = 58.0
@@ -265,6 +253,27 @@ layout_mode = 2
 text = "Back
 "
 
-[connection signal="pressed" from="Background/BackContainer2/Save" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="Background/TextureButton" to="." method="_on_texture_button_pressed"]
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_ajomw")
+
+[node name="BtnLockedAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_jsx8w")
+volume_db = 15.0
+
+[node name="SaveContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 1059.0
+offset_top = 619.0
+offset_right = 1105.0
+offset_bottom = 636.0
+scale = Vector2(2.80891, 2.44851)
+theme = SubResource("Theme_xugc8")
+
+[node name="Save" type="Button" parent="SaveContainer"]
+layout_mode = 2
+text = "Save
+"
+
+[connection signal="pressed" from="Background/restart_tree" to="." method="_on_restart_tree_pressed"]
 [connection signal="pressed" from="BackContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="SaveContainer/Save" to="." method="_on_save_pressed"]

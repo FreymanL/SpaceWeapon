@@ -17,7 +17,7 @@ extends Node2D
 signal level_has_completed
 signal game_over
 
-const TARGET_DESTROYED_ENEMIES = 37
+const TARGET_DESTROYED_ENEMIES = 47
 var destroyed_enemies = 0
 
 var start = false
@@ -39,6 +39,7 @@ var waves = {
 	6: "process_wave_6",
 	7: "process_wave_7",
 	8: "process_wave_8",
+	9: "process_wave_9",
 }
 
 var current_wave: int = 0
@@ -67,6 +68,8 @@ func set_parameters(params):
 
 func _on_timer_timeout():
 	background.global_translate(Vector2(0,1))
+	if background.global_position.y >= 1500:
+		background.global_position.y = -775
 
 func process_next_wave():
 	if current_wave == len(waves):
@@ -114,6 +117,12 @@ func process_wave_8():
 	spawn_astropajo(num_astropajos)
 	var num_cosmic_chimeras: int = 3
 	spawn_cosmic_chimera(num_cosmic_chimeras)
+	
+func process_wave_9():
+	var num_astropajos: int = 7
+	spawn_astropajo(num_astropajos)
+	var num_cosmic_chimeras: int = 3
+	spawn_cosmic_chimera(num_cosmic_chimeras)
 
 func spawn_astropajo(num: int):
 	for i in num:
@@ -134,7 +143,7 @@ func spawn_cosmic_chimera(num: int):
 		spawned.connect("enemy_has_destroyed", process_enemy_destroyed)
 		num_active_enemies += 1
 
-func process_enemy_destroyed(name: String):
+func process_enemy_destroyed(_enemy_name: String):
 	destroyed_enemies += 1
 	num_active_enemies -= 1
 	check_progress()

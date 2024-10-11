@@ -5,7 +5,10 @@ extends Control
 @onready var gold_label = $BoxContainer/GoldLabel
 @onready var buy_button : Button = $BuyContainer/Buy
 @onready var items_container = $ScrollContainer/ItemsContainer
+@onready var examples_video_player : VideoStreamPlayer = $ExamplesVideoPlayer
 @onready var store_items
+@onready var pressed_audio = $BtnPressedAudio
+@onready var locked_audio = $BtnLockedAudio
 
 var gold : int
 var selected_item : Control
@@ -33,20 +36,22 @@ func process_item_selected(item: Control):
 	details.show_text(item.item_description)
 	selected_item = item
 	buy_button.show()
+	examples_video_player.stream = load("res://videos/" + item.item_video_example + "/example.ogv")
+	examples_video_player.play()
 	check_buy()
 	
 func check_buy():
-	
 	if gold >= selected_item.item_cost:
 		buy_button.disabled = false
 	else:
 		buy_button.disabled = true
-	
 
 
 func _on_buy_focus_entered():
-	if gold < selected_item.item_cost:
+	if buy_button.disabled || gold < selected_item.item_cost:
+		locked_audio.play()
 		return #no enough money
+	buy_button.disabled = true
 	process_purchase()
 	
 func process_purchase():
@@ -60,7 +65,13 @@ func process_purchase():
 		user_data.abilities[selected_item.item_id] = true
 	UserData.user_data = user_data
 	UserData.save_data()
+	pressed_audio.play()
 	emit_signal("item_bought", selected_item)
 
 func _on_ok_pressed():
+	pressed_audio.play()
 	emit_signal("back_home")
+
+func _on_examples_video_player_finished():
+	if examples_video_player.stream:
+		examples_video_player.play()

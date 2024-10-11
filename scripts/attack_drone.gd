@@ -10,7 +10,7 @@ extends Area2D
 @onready var audio_destroyed = $AudioDestroyed
 @onready var start_position = $SpawnPosition
 
-@onready var delta = load("res://scenes/delta.tscn")
+@onready var delta_damage = load("res://scenes/in_game_items/delta.tscn")
 @onready var booster_manager = get_tree().get_first_node_in_group("BoosterManager")
 
 var speed = 100
@@ -23,11 +23,12 @@ var max_life_points = 300
 var life_points = 300
 var is_destroying = false
 var duration = 0.0
+var is_in_position
 
 func _ready():
 	var world = get_tree().get_first_node_in_group("Mundo")
 	world.connect("level_has_completed", destroy)
-	var ship = get_tree().get_first_node_in_group("Ship")
+	ship = get_tree().get_first_node_in_group("Ship")
 	global_position = ship.global_position
 	global_position = start_position.global_position
 	sprite.play("default")
@@ -45,6 +46,9 @@ func _process(delta):
 			global_position.x -= speed * delta
 		else:
 			global_position.x += speed * delta
+	is_in_position = global_position.y >= 360
+	if !is_in_position:
+		global_position.y += speed * delta
 
 func _on_timer_timeout():
 	if is_destroying:
@@ -92,7 +96,7 @@ func get_health(health):
 	show_health(health)
 
 func show_health(health):
-	var delta_instance = delta.instantiate()
+	var delta_instance = delta_damage.instantiate()
 	delta_instance.global_position = global_position
 	get_tree().call_group("Mundo", "add_child", delta_instance)
 	delta_instance.show_health(health)
@@ -100,7 +104,6 @@ func show_health(health):
 func destroy():
 	audio_destroyed.play()
 	is_destroying = true
-	collision_shape.disabled
 	scale = Vector2(0.1,0.1)
 	sprite.play("exploit")
 	await get_tree().create_timer(0.8).timeout

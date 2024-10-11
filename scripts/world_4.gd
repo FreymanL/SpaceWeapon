@@ -1,13 +1,16 @@
 extends Node2D
 
 @onready var astropajo_enemy = load("res://scenes/enemies/astropajo.tscn")
+@onready var fore_front_enemy = load("res://scenes/enemies/fore_front.tscn")
 @onready var cosmic_chimera_enemy = load("res://scenes/enemies/cosmic_chimera.tscn")
 @onready var settler_enemy = load("res://scenes/enemies/settler.tscn")
+@onready var snow_cruise_enemy = load("res://scenes/enemies/snow_cruise.tscn")
 @onready var game_settings = load("res://scenes/settings.tscn").instantiate()
 @onready var ability_icon = load("res://scenes/in_game_items/ability_icon.tscn")
 @onready var game_over_window = load("res://scenes/menu_controls/game_over.tscn")
 @onready var level_completed_window = load("res://scenes/menu_controls/level_completed.tscn")
 @onready var ability_handler = load("res://scenes/in_game_items/ability_handler.tscn")
+
 
 @onready var booster_manager = $BoostersManager
 @onready var background = $Background
@@ -18,7 +21,7 @@ extends Node2D
 signal level_has_completed
 signal game_over
 
-const TARGET_DESTROYED_ENEMIES = 37
+const TARGET_DESTROYED_ENEMIES = 63
 var destroyed_enemies = 0
 
 var start = false
@@ -31,6 +34,7 @@ var world_info
 var parameters = {}
 var num_active_enemies = 0
 var rest_between_waves = 2
+
 var waves = {
 	1: "process_wave_1",
 	2: "process_wave_2",
@@ -39,6 +43,9 @@ var waves = {
 	5: "process_wave_5",
 	6: "process_wave_6",
 	7: "process_wave_7",
+	8: "process_wave_8",
+	9: "process_wave_9",
+	10: "process_wave_10",
 }
 
 var current_wave: int = 0
@@ -65,6 +72,8 @@ func set_parameters(params):
 
 func _on_timer_timeout():
 	background.global_translate(Vector2(0,1))
+	if background.global_position.y >= 1500:
+		background.global_position.y = -775
 
 func process_next_wave():
 	if current_wave == len(waves):
@@ -76,31 +85,60 @@ func process_next_wave():
 	call(waves[current_wave])
 
 func process_wave_1():
-	spawn_astropajo(3)
+	spawn_fore_front(1)
 	
 func process_wave_2():
-	spawn_astropajo(3)
-	spawn_cosmic_chimera(2)
-
-func process_wave_3():
-	spawn_astropajo(3)
-	spawn_cosmic_chimera(2)
-
-func process_wave_4():
-	spawn_astropajo(4)
 	spawn_cosmic_chimera(3)
+	
+func process_wave_3():
+	spawn_astropajo(12)
+	
+func process_wave_4():
+	spawn_fore_front(1)
+	spawn_astropajo(6)
 
 func process_wave_5():
-	spawn_astropajo(4)
+	spawn_fore_front(1)
 	spawn_cosmic_chimera(3)
-
+	
 func process_wave_6():
-	spawn_astropajo(7)
-	spawn_cosmic_chimera(4)
+	spawn_fore_front(2)
 	
 func process_wave_7():
-	spawn_settler(1)
+	spawn_fore_front(2)
+	spawn_cosmic_chimera(3)
+	spawn_astropajo(6)
 
+func process_wave_8():
+	spawn_fore_front(3)
+
+func process_wave_9():
+	spawn_cosmic_chimera(6)
+	spawn_astropajo(10)
+	
+func process_wave_10():
+	spawn_fore_front(4)
+	
+
+	
+func spawn_fore_front(num: int):
+	for i in num:
+		var spawned = fore_front_enemy.instantiate()
+		var rng = RandomNumberGenerator.new()
+		var positionX = rng.randf_range(300,800)
+		var positionY = -100
+		spawned.global_position = Vector2(positionX,positionY)
+		add_child(spawned)
+		spawned.connect("enemy_has_destroyed", process_enemy_destroyed)
+		num_active_enemies += 1
+
+func spawn_cosmic_chimera(num: int):
+	for i in num:
+		var spawned = cosmic_chimera_enemy.instantiate()
+		spawned.global_position = Vector2(640,-50)
+		add_child(spawned)
+		spawned.connect("enemy_has_destroyed", process_enemy_destroyed)
+		num_active_enemies += 1
 
 func spawn_astropajo(num: int):
 	for i in num:
@@ -113,25 +151,8 @@ func spawn_astropajo(num: int):
 		spawned.connect("enemy_has_destroyed", process_enemy_destroyed)
 		num_active_enemies += 1
 
-func spawn_settler(num: int):
-	for i in num:
-		var spawned = settler_enemy.instantiate()
-		var rng = RandomNumberGenerator.new()
-		spawned.global_position = Vector2(640,-50)
-		add_child(spawned)
-		spawned.connect("enemy_has_destroyed", process_enemy_destroyed)
-		num_active_enemies += 1
 
-
-func spawn_cosmic_chimera(num: int):
-	for i in num:
-		var spawned = cosmic_chimera_enemy.instantiate()
-		spawned.global_position = Vector2(640,-50)
-		add_child(spawned)
-		spawned.connect("enemy_has_destroyed", process_enemy_destroyed)
-		num_active_enemies += 1
-
-func process_enemy_destroyed(name: String):
+func process_enemy_destroyed(_name: String):
 	destroyed_enemies += 1
 	num_active_enemies -= 1
 	check_progress()
