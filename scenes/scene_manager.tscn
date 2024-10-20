@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://q08bjdcidtso"]
+[gd_scene load_steps=3 format=3 uid="uid://q08bjdcidtso"]
 
 [ext_resource type="Script" path="res://scripts/scene_manager.gd" id="1_ny73s"]
+[ext_resource type="PackedScene" uid="uid://b5uqqa3laa3h6" path="res://scenes/sounds_manager.tscn" id="2_d8e2w"]
 
-[node name="SceneManager" type="Node2D"]
+[node name="SceneManager" type="Node2D" groups=["SceneManager"]]
 script = ExtResource("1_ny73s")
+
+[node name="SoundsManager" parent="." instance=ExtResource("2_d8e2w")]

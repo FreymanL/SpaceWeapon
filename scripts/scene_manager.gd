@@ -39,3 +39,5 @@ func create_menu_instance():
 	var menu_instance = main_menu.instantiate()
 	menu_instance.connect("play_world", process_play_world)
 	return menu_instance
+
+

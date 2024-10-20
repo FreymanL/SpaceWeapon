@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://p5ql03snvd7j"]
+[gd_scene load_steps=13 format=3 uid="uid://p5ql03snvd7j"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_x6uos"]
 [ext_resource type="Texture2D" uid="uid://dokk6tfv4lft5" path="res://images/backgrounds/bgmenu.png" id="2_l32du"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://8ppiun8fwo6m" path="res://scenes/menu_controls/passive_skills_tree.tscn" id="7_efpd1"]
 [ext_resource type="PackedScene" uid="uid://bhrl2dev3d7qx" path="res://scenes/menu_controls/upgrades_menu.tscn" id="8_65v8e"]
 [ext_resource type="AudioStream" uid="uid://ch0sj5rv53ajp" path="res://audios/ui-click-43196 (mp3cut.net).mp3" id="9_dcoy0"]
+[ext_resource type="PackedScene" uid="uid://f28j43rvjlgg" path="res://scenes/menu_controls/options_menu.tscn" id="9_slkrf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u1gkb"]
 font = ExtResource("3_f68te")
@@ -60,7 +61,12 @@ text = "PLAY"
 layout_mode = 2
 text = "UPGRADES"
 
-[node name="MenuAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="Options" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+text = "OPTIONS
+"
+
+[node name="MenuAudio" type="AudioStreamPlayer2D" parent="." groups=["Music"]]
 stream = ExtResource("3_w0g5q")
 autoplay = true
 
@@ -79,8 +85,12 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
-[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="OptionsMenu" parent="." instance=ExtResource("9_slkrf")]
+visible = false
+
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="." groups=["MenuSound"]]
 stream = ExtResource("9_dcoy0")
 
 [connection signal="pressed" from="ButtonContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="ButtonContainer/Upgrades" to="." method="_on_upgrades_pressed"]
+[connection signal="pressed" from="ButtonContainer/Options" to="." method="_on_options_pressed"]

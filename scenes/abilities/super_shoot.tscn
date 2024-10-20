@@ -61,7 +61,7 @@ icon = ExtResource("2_3wdry")
 position = Vector2(-5.5, -427)
 shape = SubResource("RectangleShape2D_kpabe")
 
-[node name="ShootAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="ShootAudio" type="AudioStreamPlayer2D" parent="." groups=["SoundEffect"]]
 stream = ExtResource("10_86xss")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

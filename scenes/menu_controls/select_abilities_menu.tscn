@@ -97,10 +97,10 @@ offset_right = 426.0
 offset_bottom = 631.0
 label_settings = SubResource("LabelSettings_vd2xc")
 
-[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="." groups=["MenuSound"]]
 stream = ExtResource("3_1m026")
 
-[node name="BtnLockedAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="BtnLockedAudio" type="AudioStreamPlayer2D" parent="." groups=["MenuSound"]]
 stream = ExtResource("4_12eye")
 volume_db = 15.0
 

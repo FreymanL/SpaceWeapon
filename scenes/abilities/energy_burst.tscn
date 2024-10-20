@@ -140,7 +140,7 @@ frame = 8
 frame_progress = 0.231096
 speed_scale = 5.0
 
-[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+[node name="Audio" type="AudioStreamPlayer2D" parent="." groups=["SoundEffect"]]
 stream = ExtResource("3_bmrc8")
 autoplay = true
 

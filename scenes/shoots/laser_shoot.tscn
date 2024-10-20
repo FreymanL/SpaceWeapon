@@ -52,7 +52,7 @@ sprite_frames = SubResource("SpriteFrames_qqypq")
 animation = &"crashed"
 frame_progress = 0.598161
 
-[node name="ShootAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="ShootAudio" type="AudioStreamPlayer2D" parent="." groups=["SoundEffect"]]
 stream = ExtResource("6_tmx2v")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]

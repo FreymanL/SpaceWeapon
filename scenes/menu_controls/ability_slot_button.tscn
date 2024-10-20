@@ -13,7 +13,7 @@ texture_hover = ExtResource("2_iodse")
 texture_focused = ExtResource("2_iodse")
 script = ExtResource("3_ypij5")
 
-[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="." groups=["MenuSound"]]
 stream = ExtResource("4_huref")
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -253,10 +253,10 @@ layout_mode = 2
 text = "Back
 "
 
-[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="." groups=["MenuSound"]]
 stream = ExtResource("7_ajomw")
 
-[node name="BtnLockedAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="BtnLockedAudio" type="AudioStreamPlayer2D" parent="." groups=["MenuSound"]]
 stream = ExtResource("8_jsx8w")
 volume_db = 15.0
 

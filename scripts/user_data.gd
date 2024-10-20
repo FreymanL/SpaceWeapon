@@ -3,11 +3,14 @@ extends Node
 const file_path = "user://SAVEFILE.save"
 
 var user_data: Dictionary = {
-	"gold": 100,
+	"gold": 100000,
 	"ability_points": 0,
 	"abilities": {
 	},
-	"current_level": 1,
+	"current_level": 5,
+	"music_volume": 71,
+	"sound_effect_volume": 71,
+	"menu_effect_volume": 71
 }
 
 func _ready():

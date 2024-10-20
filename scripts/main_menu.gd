@@ -8,6 +8,8 @@ extends Control
 @onready var skills_tree = $PassiveSkillsTree
 @onready var upgrades_menu = $UpgradesMenu
 @onready var pressed_audio = $BtnPressedAudio
+@onready var options_menu = $OptionsMenu
+
 var level_selected
 
 signal play_world(parameters : Dictionary)
@@ -22,6 +24,7 @@ func _ready():
 	skills_tree.connect("tree_has_setted", process_tree_has_setted)
 	skills_tree.connect("ability_tree_select_canceled", process_skill_tree_canceled)
 	upgrades_menu.connect("back_home", process_upgrades_back_home)
+	options_menu.connect("ok_options", process_ok_options)
 	btn_play.grab_focus()
 
 func set_level_selected(level):
@@ -78,3 +81,13 @@ func _on_upgrades_pressed():
 	pressed_audio.play()
 	hide_main_menu()
 	upgrades_menu.show()
+	
+func process_ok_options():
+	options_menu.hide()
+	show_main_menu()
+
+
+func _on_options_pressed():
+	pressed_audio.play()
+	hide_main_menu()
+	options_menu.show()

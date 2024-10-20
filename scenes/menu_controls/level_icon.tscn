@@ -25,7 +25,7 @@ text = "MISSION BEGGINS"
 label_settings = SubResource("LabelSettings_wclh6")
 horizontal_alignment = 1
 
-[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="." groups=["MenuSound"]]
 stream = ExtResource("4_v2cih")
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

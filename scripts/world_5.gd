@@ -10,7 +10,7 @@ extends Node2D
 @onready var game_over_window = load("res://scenes/menu_controls/game_over.tscn")
 @onready var level_completed_window = load("res://scenes/menu_controls/level_completed.tscn")
 @onready var ability_handler = load("res://scenes/in_game_items/ability_handler.tscn")
-
+@onready var pause_menu = load("res://scenes/menu_controls/pause_menu.tscn")
 
 @onready var booster_manager = $BoostersManager
 @onready var background = $Background
@@ -199,3 +199,14 @@ func process_level_completed():
 func update_user_data():
 	UserData.user_data.current_level = max(UserData.user_data.current_level, world_info.num + 1)
 	UserData.save_data()
+
+
+func _on_pause_button_pressed():
+	get_tree().paused = true
+	var instance = pause_menu.instantiate()
+	add_child(instance)
+
+func _process(_delta):
+	if Input.is_action_just_pressed("ui_cancel"):
+		_on_pause_button_pressed()
+

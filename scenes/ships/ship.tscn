@@ -312,7 +312,7 @@ value = 50.0
 show_percentage = false
 script = ExtResource("7_2p31d")
 
-[node name="DestroyedAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="DestroyedAudio" type="AudioStreamPlayer2D" parent="." groups=["SoundEffect"]]
 stream = ExtResource("7_o6m04")
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]

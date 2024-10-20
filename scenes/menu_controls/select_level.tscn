@@ -57,7 +57,7 @@ layout_mode = 2
 text = "Back
 "
 
-[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="." groups=["MenuSound"]]
 stream = ExtResource("3_h31rh")
 
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_back_pressed"]

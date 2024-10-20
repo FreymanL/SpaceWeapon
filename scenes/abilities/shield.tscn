@@ -68,14 +68,14 @@ speed_scale = 2.0
 [node name="ExecutionTime" type="Timer" parent="."]
 wait_time = 10.0
 
-[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+[node name="Audio" type="AudioStreamPlayer2D" parent="." groups=["SoundEffect"]]
 stream = ExtResource("3_hsgn6")
 autoplay = true
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ouech")
 
-[node name="HitAudio" type="AudioStreamPlayer2D" parent="."]
+[node name="HitAudio" type="AudioStreamPlayer2D" parent="." groups=["SoundEffect"]]
 stream = ExtResource("5_op5ry")
 
 [connection signal="timeout" from="ExecutionTime" to="." method="_on_execution_timer_timeout"]

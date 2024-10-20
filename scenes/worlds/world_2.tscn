@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://5wgmnkcv25d0"]
+[gd_scene load_steps=13 format=3 uid="uid://5wgmnkcv25d0"]
 
 [ext_resource type="Script" path="res://scripts/world_2.gd" id="1_c2fmp"]
 [ext_resource type="PackedScene" uid="uid://i4misnd337pc" path="res://scenes/ships/ship.tscn" id="2_5vaoe"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://dx6i6ol78mnea" path="res://scenes/in_game_items/regeneration_manager.tscn" id="6_r3xke"]
 [ext_resource type="PackedScene" uid="uid://dn5vw6nrt546h" path="res://scenes/gold_manager.tscn" id="8_evxwx"]
 [ext_resource type="AudioStream" uid="uid://bd7o58w5lrwdk" path="res://audios/world2.mp3" id="9_8le7h"]
+[ext_resource type="Texture2D" uid="uid://3ldw0vr0c7ey" path="res://images/menu/pause.png" id="10_170q5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sdoce"]
 bg_color = Color(0, 0, 0, 1)
@@ -54,8 +55,16 @@ offset_bottom = 638.0
 
 [node name="GoldManager" parent="." instance=ExtResource("8_evxwx")]
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="WorldMusic" type="AudioStreamPlayer2D" parent="." groups=["Music"]]
 stream = ExtResource("9_8le7h")
 autoplay = true
 
+[node name="PauseButton" type="TextureButton" parent="."]
+offset_left = 1227.0
+offset_top = 22.0
+offset_right = 1267.0
+offset_bottom = 62.0
+texture_normal = ExtResource("10_170q5")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="PauseButton" to="." method="_on_pause_button_pressed"]

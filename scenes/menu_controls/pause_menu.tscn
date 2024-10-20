@@ -1,0 +1,118 @@
+[gd_scene load_steps=9 format=3 uid="uid://betrgyuls48rw"]
+
+[ext_resource type="FontFile" uid="uid://bmnypigf4h1l8" path="res://font/dogica/OTF/dogica.otf" id="1_oqh28"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_p64mx"]
+[ext_resource type="AudioStream" uid="uid://ch0sj5rv53ajp" path="res://audios/ui-click-43196 (mp3cut.net).mp3" id="3_ox83k"]
+[ext_resource type="AudioStream" uid="uid://denu2i72bkppg" path="res://audios/switch-light-04-82204 (mp3cut.net).mp3" id="4_hmq6q"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2sygv"]
+font = ExtResource("1_oqh28")
+font_size = 14
+
+[sub_resource type="Theme" id="Theme_ij735"]
+default_font = ExtResource("1_oqh28")
+
+[sub_resource type="Theme" id="Theme_6d4xf"]
+default_font = ExtResource("1_oqh28")
+default_font_size = 12
+
+[sub_resource type="Theme" id="Theme_cw4wc"]
+default_font = ExtResource("1_oqh28")
+default_font_size = 12
+
+[node name="PauseMenu" type="Control" groups=["menu_actions"]]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p64mx")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+offset_left = 486.0
+offset_top = 163.0
+offset_right = 786.0
+offset_bottom = 563.0
+color = Color(0, 0, 0, 0.811765)
+
+[node name="SuccessLabel" type="Label" parent="Background"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 64.0
+offset_right = 274.0
+offset_bottom = 90.0
+text = "Options
+"
+label_settings = SubResource("LabelSettings_2sygv")
+
+[node name="ButtonContainer" type="HBoxContainer" parent="Background"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 347.0
+offset_right = 278.0
+offset_bottom = 387.0
+theme = SubResource("Theme_ij735")
+theme_override_constants/separation = 80
+
+[node name="Home" type="Button" parent="Background/ButtonContainer"]
+layout_mode = 2
+text = "Home
+"
+
+[node name="Resume" type="Button" parent="Background/ButtonContainer"]
+layout_mode = 2
+text = "Resume
+"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 104.0
+offset_right = 242.0
+offset_bottom = 150.0
+
+[node name="MusicLabel" type="Label" parent="Background/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_6d4xf")
+text = "Music
+"
+
+[node name="MusicSlider" type="HSlider" parent="Background/VBoxContainer"]
+layout_mode = 2
+value = 71.0
+
+[node name="SoundEffectLabel" type="Label" parent="Background/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_cw4wc")
+text = "Game Effects
+"
+
+[node name="SoundEffectSlider" type="HSlider" parent="Background/VBoxContainer"]
+layout_mode = 2
+value = 71.0
+
+[node name="MenuSoundLabel" type="Label" parent="Background/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_cw4wc")
+text = "Menu Effects
+"
+
+[node name="MenuSoundSlider" type="HSlider" parent="Background/VBoxContainer"]
+layout_mode = 2
+value = 71.0
+
+[node name="BtnPressedAudio" type="AudioStreamPlayer2D" parent="." groups=["MenuSound"]]
+stream = ExtResource("3_ox83k")
+
+[node name="BtnLockedAudio" type="AudioStreamPlayer2D" parent="." groups=["MenuSound"]]
+stream = ExtResource("4_hmq6q")
+volume_db = 15.0
+
+[connection signal="pressed" from="Background/ButtonContainer/Home" to="." method="_on_home_pressed"]
+[connection signal="pressed" from="Background/ButtonContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="value_changed" from="Background/VBoxContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="Background/VBoxContainer/SoundEffectSlider" to="." method="_on_sound_effect_slider_value_changed"]
+[connection signal="value_changed" from="Background/VBoxContainer/MenuSoundSlider" to="." method="_on_menu_sound_slider_value_changed"]
